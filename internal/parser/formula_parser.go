@@ -4,13 +4,13 @@ package parser // Formula
 
 import (
 	"fmt"
+	"github.com/yidane/formula/internal/exp"
+	"github.com/yidane/formula/opt"
 	"reflect"
 	"strconv"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
-
-import "github.com/yidane/formula/opt"
 
 // Suppress unused import errors
 var _ = fmt.Printf
@@ -589,7 +589,7 @@ func (p *FormulaParser) Expr() (localctx IExprContext) {
 
 			localctx.(*ExprContext).right = _x
 		}
-		localctx.(*ExprContext).retValue = opt.NewTernaryExpression(localctx.(*ExprContext).GetFirst().GetRetValue(), localctx.(*ExprContext).GetMiddle().GetRetValue(), localctx.(*ExprContext).GetRight().GetRetValue())
+		localctx.(*ExprContext).retValue = exp.NewTernaryExpression(localctx.(*ExprContext).GetFirst().GetRetValue(), localctx.(*ExprContext).GetMiddle().GetRetValue(), localctx.(*ExprContext).GetRight().GetRetValue())
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
@@ -795,7 +795,7 @@ func (p *FormulaParser) orExpr(_p int) (localctx IOrExprContext) {
 
 				localctx.(*OrExprContext)._andExpr = _x
 			}
-			localctx.(*OrExprContext).retValue = opt.NewBinaryExpression("||", localctx.(*OrExprContext).GetFirst().GetRetValue(), localctx.(*OrExprContext).Get_andExpr().GetRetValue())
+			localctx.(*OrExprContext).retValue = exp.NewBinaryExpression("||", localctx.(*OrExprContext).GetFirst().GetRetValue(), localctx.(*OrExprContext).Get_andExpr().GetRetValue())
 
 		}
 		p.SetState(61)
@@ -994,7 +994,7 @@ func (p *FormulaParser) andExpr(_p int) (localctx IAndExprContext) {
 
 				localctx.(*AndExprContext)._bitOrExpr = _x
 			}
-			localctx.(*AndExprContext).retValue = opt.NewBinaryExpression("&&", localctx.(*AndExprContext).GetFirst().GetRetValue(), localctx.(*AndExprContext).Get_bitOrExpr().GetRetValue())
+			localctx.(*AndExprContext).retValue = exp.NewBinaryExpression("&&", localctx.(*AndExprContext).GetFirst().GetRetValue(), localctx.(*AndExprContext).Get_bitOrExpr().GetRetValue())
 
 		}
 		p.SetState(75)
@@ -1187,7 +1187,7 @@ func (p *FormulaParser) bitOrExpr(_p int) (localctx IBitOrExprContext) {
 
 				localctx.(*BitOrExprContext)._bitXorExpr = _x
 			}
-			localctx.(*BitOrExprContext).retValue = opt.NewBinaryExpression("|", localctx.(*BitOrExprContext).GetFirst().GetRetValue(), localctx.(*BitOrExprContext).Get_bitXorExpr().GetRetValue())
+			localctx.(*BitOrExprContext).retValue = exp.NewBinaryExpression("|", localctx.(*BitOrExprContext).GetFirst().GetRetValue(), localctx.(*BitOrExprContext).Get_bitXorExpr().GetRetValue())
 
 		}
 		p.SetState(89)
@@ -1380,7 +1380,7 @@ func (p *FormulaParser) bitXorExpr(_p int) (localctx IBitXorExprContext) {
 
 				localctx.(*BitXorExprContext)._bitAndExpr = _x
 			}
-			localctx.(*BitXorExprContext).retValue = opt.NewBinaryExpression("^", localctx.(*BitXorExprContext).GetFirst().GetRetValue(), localctx.(*BitXorExprContext).Get_bitAndExpr().GetRetValue())
+			localctx.(*BitXorExprContext).retValue = exp.NewBinaryExpression("^", localctx.(*BitXorExprContext).GetFirst().GetRetValue(), localctx.(*BitXorExprContext).Get_bitAndExpr().GetRetValue())
 
 		}
 		p.SetState(103)
@@ -1573,7 +1573,7 @@ func (p *FormulaParser) bitAndExpr(_p int) (localctx IBitAndExprContext) {
 
 				localctx.(*BitAndExprContext)._eqExpr = _x
 			}
-			localctx.(*BitAndExprContext).retValue = opt.NewBinaryExpression("&", localctx.(*BitAndExprContext).GetFirst().GetRetValue(), localctx.(*BitAndExprContext).Get_eqExpr().GetRetValue())
+			localctx.(*BitAndExprContext).retValue = exp.NewBinaryExpression("&", localctx.(*BitAndExprContext).GetFirst().GetRetValue(), localctx.(*BitAndExprContext).Get_eqExpr().GetRetValue())
 
 		}
 		p.SetState(117)
@@ -1776,7 +1776,7 @@ func (p *FormulaParser) eqExpr(_p int) (localctx IEqExprContext) {
 
 					localctx.(*EqExprContext)._relExpr = _x
 				}
-				localctx.(*EqExprContext).retValue = opt.NewBinaryExpression("==", localctx.(*EqExprContext).GetFirst().GetRetValue(), localctx.(*EqExprContext).Get_relExpr().GetRetValue())
+				localctx.(*EqExprContext).retValue = exp.NewBinaryExpression("==", localctx.(*EqExprContext).GetFirst().GetRetValue(), localctx.(*EqExprContext).Get_relExpr().GetRetValue())
 
 			case 2:
 				localctx = NewEqExprContext(p, _parentctx, _parentState)
@@ -1803,7 +1803,7 @@ func (p *FormulaParser) eqExpr(_p int) (localctx IEqExprContext) {
 
 					localctx.(*EqExprContext)._relExpr = _x
 				}
-				localctx.(*EqExprContext).retValue = opt.NewBinaryExpression("!=", localctx.(*EqExprContext).GetFirst().GetRetValue(), localctx.(*EqExprContext).Get_relExpr().GetRetValue())
+				localctx.(*EqExprContext).retValue = exp.NewBinaryExpression("!=", localctx.(*EqExprContext).GetFirst().GetRetValue(), localctx.(*EqExprContext).Get_relExpr().GetRetValue())
 
 			}
 
@@ -2002,7 +2002,7 @@ func (p *FormulaParser) relExpr(_p int) (localctx IRelExprContext) {
 
 					localctx.(*RelExprContext)._shiftExpr = _x
 				}
-				localctx.(*RelExprContext).retValue = opt.NewBinaryExpression("<", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
+				localctx.(*RelExprContext).retValue = exp.NewBinaryExpression("<", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
 
 			case 2:
 				localctx = NewRelExprContext(p, _parentctx, _parentState)
@@ -2024,7 +2024,7 @@ func (p *FormulaParser) relExpr(_p int) (localctx IRelExprContext) {
 
 					localctx.(*RelExprContext)._shiftExpr = _x
 				}
-				localctx.(*RelExprContext).retValue = opt.NewBinaryExpression("<=", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
+				localctx.(*RelExprContext).retValue = exp.NewBinaryExpression("<=", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
 
 			case 3:
 				localctx = NewRelExprContext(p, _parentctx, _parentState)
@@ -2046,7 +2046,7 @@ func (p *FormulaParser) relExpr(_p int) (localctx IRelExprContext) {
 
 					localctx.(*RelExprContext)._shiftExpr = _x
 				}
-				localctx.(*RelExprContext).retValue = opt.NewBinaryExpression(">", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
+				localctx.(*RelExprContext).retValue = exp.NewBinaryExpression(">", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
 
 			case 4:
 				localctx = NewRelExprContext(p, _parentctx, _parentState)
@@ -2068,7 +2068,7 @@ func (p *FormulaParser) relExpr(_p int) (localctx IRelExprContext) {
 
 					localctx.(*RelExprContext)._shiftExpr = _x
 				}
-				localctx.(*RelExprContext).retValue = opt.NewBinaryExpression(">=", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
+				localctx.(*RelExprContext).retValue = exp.NewBinaryExpression(">=", localctx.(*RelExprContext).GetFirst().GetRetValue(), localctx.(*RelExprContext).Get_shiftExpr().GetRetValue())
 
 			}
 
@@ -2267,7 +2267,7 @@ func (p *FormulaParser) shiftExpr(_p int) (localctx IShiftExprContext) {
 
 					localctx.(*ShiftExprContext)._addExpr = _x
 				}
-				localctx.(*ShiftExprContext).retValue = opt.NewBinaryExpression("<<", localctx.(*ShiftExprContext).GetFirst().GetRetValue(), localctx.(*ShiftExprContext).Get_addExpr().GetRetValue())
+				localctx.(*ShiftExprContext).retValue = exp.NewBinaryExpression("<<", localctx.(*ShiftExprContext).GetFirst().GetRetValue(), localctx.(*ShiftExprContext).Get_addExpr().GetRetValue())
 
 			case 2:
 				localctx = NewShiftExprContext(p, _parentctx, _parentState)
@@ -2289,7 +2289,7 @@ func (p *FormulaParser) shiftExpr(_p int) (localctx IShiftExprContext) {
 
 					localctx.(*ShiftExprContext)._addExpr = _x
 				}
-				localctx.(*ShiftExprContext).retValue = opt.NewBinaryExpression(">>", localctx.(*ShiftExprContext).GetFirst().GetRetValue(), localctx.(*ShiftExprContext).Get_addExpr().GetRetValue())
+				localctx.(*ShiftExprContext).retValue = exp.NewBinaryExpression(">>", localctx.(*ShiftExprContext).GetFirst().GetRetValue(), localctx.(*ShiftExprContext).Get_addExpr().GetRetValue())
 
 			}
 
@@ -2488,7 +2488,7 @@ func (p *FormulaParser) addExpr(_p int) (localctx IAddExprContext) {
 
 					localctx.(*AddExprContext)._multExpr = _x
 				}
-				localctx.(*AddExprContext).retValue = opt.NewBinaryExpression("+", localctx.(*AddExprContext).GetFirst().GetRetValue(), localctx.(*AddExprContext).Get_multExpr().GetRetValue())
+				localctx.(*AddExprContext).retValue = exp.NewBinaryExpression("+", localctx.(*AddExprContext).GetFirst().GetRetValue(), localctx.(*AddExprContext).Get_multExpr().GetRetValue())
 
 			case 2:
 				localctx = NewAddExprContext(p, _parentctx, _parentState)
@@ -2510,7 +2510,7 @@ func (p *FormulaParser) addExpr(_p int) (localctx IAddExprContext) {
 
 					localctx.(*AddExprContext)._multExpr = _x
 				}
-				localctx.(*AddExprContext).retValue = opt.NewBinaryExpression("-", localctx.(*AddExprContext).GetFirst().GetRetValue(), localctx.(*AddExprContext).Get_multExpr().GetRetValue())
+				localctx.(*AddExprContext).retValue = exp.NewBinaryExpression("-", localctx.(*AddExprContext).GetFirst().GetRetValue(), localctx.(*AddExprContext).Get_multExpr().GetRetValue())
 
 			}
 
@@ -2709,7 +2709,7 @@ func (p *FormulaParser) multExpr(_p int) (localctx IMultExprContext) {
 
 					localctx.(*MultExprContext)._unaryExpr = _x
 				}
-				localctx.(*MultExprContext).retValue = opt.NewBinaryExpression("*", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
+				localctx.(*MultExprContext).retValue = exp.NewBinaryExpression("*", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
 
 			case 2:
 				localctx = NewMultExprContext(p, _parentctx, _parentState)
@@ -2731,7 +2731,7 @@ func (p *FormulaParser) multExpr(_p int) (localctx IMultExprContext) {
 
 					localctx.(*MultExprContext)._unaryExpr = _x
 				}
-				localctx.(*MultExprContext).retValue = opt.NewBinaryExpression("/", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
+				localctx.(*MultExprContext).retValue = exp.NewBinaryExpression("/", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
 
 			case 3:
 				localctx = NewMultExprContext(p, _parentctx, _parentState)
@@ -2753,7 +2753,7 @@ func (p *FormulaParser) multExpr(_p int) (localctx IMultExprContext) {
 
 					localctx.(*MultExprContext)._unaryExpr = _x
 				}
-				localctx.(*MultExprContext).retValue = opt.NewBinaryExpression("%", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
+				localctx.(*MultExprContext).retValue = exp.NewBinaryExpression("%", localctx.(*MultExprContext).GetFirst().GetRetValue(), localctx.(*MultExprContext).Get_unaryExpr().GetRetValue())
 
 			}
 
@@ -2899,7 +2899,7 @@ func (p *FormulaParser) UnaryExpr() (localctx IUnaryExprContext) {
 
 			localctx.(*UnaryExprContext)._primaryExpr = _x
 		}
-		localctx.(*UnaryExprContext).retValue = opt.NewNotUnaryExpression("!", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
+		localctx.(*UnaryExprContext).retValue = exp.NewNotUnaryExpression("!", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
 
 	case FormulaParserT__26:
 		p.EnterOuterAlt(localctx, 2)
@@ -2914,7 +2914,7 @@ func (p *FormulaParser) UnaryExpr() (localctx IUnaryExprContext) {
 
 			localctx.(*UnaryExprContext)._primaryExpr = _x
 		}
-		localctx.(*UnaryExprContext).retValue = opt.NewBitwiseNotUnaryExpression("~", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
+		localctx.(*UnaryExprContext).retValue = exp.NewBitwiseNotUnaryExpression("~", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
 
 	case FormulaParserT__20:
 		p.EnterOuterAlt(localctx, 3)
@@ -2929,7 +2929,7 @@ func (p *FormulaParser) UnaryExpr() (localctx IUnaryExprContext) {
 
 			localctx.(*UnaryExprContext)._primaryExpr = _x
 		}
-		localctx.(*UnaryExprContext).retValue = opt.NewNegateUnaryExpression("-", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
+		localctx.(*UnaryExprContext).retValue = exp.NewNegateUnaryExpression("-", localctx.(*UnaryExprContext).Get_primaryExpr().GetRetValue())
 
 	case FormulaParserT__27, FormulaParserTRUE, FormulaParserFALSE, FormulaParserNAME, FormulaParserINTEGER, FormulaParserDATETIME, FormulaParserVAR, FormulaParserFLOAT, FormulaParserSTRING:
 		p.EnterOuterAlt(localctx, 4)
@@ -3196,7 +3196,7 @@ func (p *FormulaParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 			p.SetState(266)
 			p.Match(FormulaParserT__28)
 		}
-		localctx.(*PrimaryExprContext).retValue = opt.NewFunctionExpression(opt.NewIdentifier((func() string {
+		localctx.(*PrimaryExprContext).retValue = exp.NewFunctionExpression(opt.NewIdentifier((func() string {
 			if localctx.(*PrimaryExprContext).Get_id() == nil {
 				return ""
 			} else {
@@ -3390,7 +3390,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 
 			localctx.(*ValueContext)._INTEGER = _m
 		}
-		localctx.(*ValueContext).retValue = opt.NewIntegerValueExpression((func() string {
+		localctx.(*ValueContext).retValue = exp.NewIntegerValueExpression((func() string {
 			if localctx.(*ValueContext).Get_INTEGER() == nil {
 				return ""
 			} else {
@@ -3407,7 +3407,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 
 			localctx.(*ValueContext)._FLOAT = _m
 		}
-		localctx.(*ValueContext).retValue = opt.NewFloatExpression((func() string {
+		localctx.(*ValueContext).retValue = exp.NewFloatExpression((func() string {
 			if localctx.(*ValueContext).Get_FLOAT() == nil {
 				return ""
 			} else {
@@ -3424,7 +3424,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 
 			localctx.(*ValueContext)._STRING = _m
 		}
-		localctx.(*ValueContext).retValue = opt.NewStringValueExpression((func() string {
+		localctx.(*ValueContext).retValue = exp.NewStringValueExpression((func() string {
 			if localctx.(*ValueContext).Get_STRING() == nil {
 				return ""
 			} else {
@@ -3441,7 +3441,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 
 			localctx.(*ValueContext)._DATETIME = _m
 		}
-		localctx.(*ValueContext).retValue = opt.NewDateTimeExpression((func() string {
+		localctx.(*ValueContext).retValue = exp.NewDateTimeExpression((func() string {
 			if localctx.(*ValueContext).Get_DATETIME() == nil {
 				return ""
 			} else {
@@ -3455,7 +3455,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 			p.SetState(282)
 			p.Match(FormulaParserTRUE)
 		}
-		localctx.(*ValueContext).retValue = opt.NewBooleanValueExpression(true)
+		localctx.(*ValueContext).retValue = exp.NewBooleanValueExpression(true)
 
 	case FormulaParserFALSE:
 		p.EnterOuterAlt(localctx, 6)
@@ -3463,7 +3463,7 @@ func (p *FormulaParser) Value() (localctx IValueContext) {
 			p.SetState(284)
 			p.Match(FormulaParserFALSE)
 		}
-		localctx.(*ValueContext).retValue = opt.NewBooleanValueExpression(false)
+		localctx.(*ValueContext).retValue = exp.NewBooleanValueExpression(false)
 
 	default:
 		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
