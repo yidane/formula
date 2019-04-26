@@ -6,7 +6,7 @@ type FunctionExpression struct {
 	opt.BaseExpression
 }
 
-func NewFunctionExpression(id *opt.IdentifierExpression, args []*opt.LogicalExpression) *opt.LogicalExpression {
+func NewFunctionExpression(id *IdentifierExpression, args []*opt.LogicalExpression) *opt.LogicalExpression {
 	var result opt.LogicalExpression =&FunctionExpression{}
 
 	return &result

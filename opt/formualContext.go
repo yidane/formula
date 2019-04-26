@@ -19,8 +19,8 @@ type FormulaContext struct {
 	Error error
 }
 
-func NewFormulaContext(options Options) FormulaContext{
-	return FormulaContext{
+func NewFormulaContext(options Options) *FormulaContext{
+	return &FormulaContext{
 		Options:options,
 		Parameters:make(map[string]interface{}),
 	}

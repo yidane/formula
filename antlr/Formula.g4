@@ -3,7 +3,10 @@ grammar Formula;
 options{language=go;}
 
 @header {
-import "github.com/yidane/formula/opt"
+import (
+    "github.com/yidane/formula/opt"
+    "github.com/yidane/formula/internal/exp"
+)
 }
 
 @members {
@@ -12,79 +15,79 @@ import "github.com/yidane/formula/opt"
 @init {
     numberFormatInfo.NumberDecimalSeparator = ".";
 }
-ncalc returns[*opt.LogicalExpression retValue]
+calc returns[*opt.LogicalExpression retValue]
     : expr EOF { $retValue = $expr.retValue}
     ;
 
 //三元操作
  expr returns[*opt.LogicalExpression retValue]
-    : first=orExpr '?' middle=expr ':' right=expr   { $retValue = opt.NewTernaryExpression($first.retValue, $middle.retValue, $right.retValue)}
+    : first=orExpr '?' middle=expr ':' right=expr   { $retValue = exp.NewTernaryExpression($first.retValue, $middle.retValue, $right.retValue)}
     | orExpr                                        { $retValue = $orExpr.retValue}
     ;
 
 orExpr returns[*opt.LogicalExpression retValue]
-    : first=orExpr ('||'|'or') andExpr      { $retValue = opt.NewBinaryExpression("||", $first.retValue, $andExpr.retValue)}
+    : first=orExpr ('||'|'or') andExpr      { $retValue = exp.NewBinaryExpression("||", $first.retValue, $andExpr.retValue)}
     | andExpr                               { $retValue = $andExpr.retValue}
     ;
 
 andExpr returns[*opt.LogicalExpression retValue]
-    : first=andExpr ('&&'|'and') bitOrExpr  { $retValue = opt.NewBinaryExpression("&&", $first.retValue, $bitOrExpr.retValue)}
+    : first=andExpr ('&&'|'and') bitOrExpr  { $retValue = exp.NewBinaryExpression("&&", $first.retValue, $bitOrExpr.retValue)}
     | bitOrExpr                             { $retValue = $bitOrExpr.retValue}
     ;
 
 bitOrExpr returns[*opt.LogicalExpression retValue]
-    : first=bitOrExpr '|' bitXorExpr    { $retValue = opt.NewBinaryExpression("|", $first.retValue, $bitXorExpr.retValue)}
+    : first=bitOrExpr '|' bitXorExpr    { $retValue = exp.NewBinaryExpression("|", $first.retValue, $bitXorExpr.retValue)}
     | bitXorExpr                        { $retValue = $bitXorExpr.retValue}
     ;
 
 bitXorExpr returns[*opt.LogicalExpression retValue]
-    : first=bitXorExpr '^' bitAndExpr   { $retValue = opt.NewBinaryExpression("^", $first.retValue, $bitAndExpr.retValue)}
+    : first=bitXorExpr '^' bitAndExpr   { $retValue = exp.NewBinaryExpression("^", $first.retValue, $bitAndExpr.retValue)}
     | bitAndExpr                        { $retValue = $bitAndExpr.retValue}
     ;
 
 bitAndExpr returns[*opt.LogicalExpression retValue]
-    : first=bitAndExpr '&' eqExpr       { $retValue = opt.NewBinaryExpression("&", $first.retValue, $eqExpr.retValue)}
+    : first=bitAndExpr '&' eqExpr       { $retValue = exp.NewBinaryExpression("&", $first.retValue, $eqExpr.retValue)}
     | eqExpr                            { $retValue = $eqExpr.retValue}
     ;
 
 eqExpr returns[*opt.LogicalExpression retValue]
-    : first=eqExpr ('=='|'=')  relExpr  { $retValue = opt.NewBinaryExpression("==", $first.retValue, $relExpr.retValue)}
-    | first=eqExpr ('!='|'<>') relExpr  { $retValue = opt.NewBinaryExpression("!=", $first.retValue, $relExpr.retValue)}
+    : first=eqExpr ('=='|'=')  relExpr  { $retValue = exp.NewBinaryExpression("==", $first.retValue, $relExpr.retValue)}
+    | first=eqExpr ('!='|'<>') relExpr  { $retValue = exp.NewBinaryExpression("!=", $first.retValue, $relExpr.retValue)}
     | relExpr                           { $retValue = $relExpr.retValue}
     ;
 
 relExpr returns[*opt.LogicalExpression retValue]
-    : first=relExpr '<'  shiftExpr      { $retValue = opt.NewBinaryExpression("<", $first.retValue, $shiftExpr.retValue)}
-    | first=relExpr '<=' shiftExpr      { $retValue = opt.NewBinaryExpression("<=", $first.retValue, $shiftExpr.retValue)}
-    | first=relExpr '>'  shiftExpr      { $retValue = opt.NewBinaryExpression(">", $first.retValue, $shiftExpr.retValue)}
-    | first=relExpr '>=' shiftExpr      { $retValue = opt.NewBinaryExpression(">=", $first.retValue, $shiftExpr.retValue)}
+    : first=relExpr '<'  shiftExpr      { $retValue = exp.NewBinaryExpression("<", $first.retValue, $shiftExpr.retValue)}
+    | first=relExpr '<=' shiftExpr      { $retValue = exp.NewBinaryExpression("<=", $first.retValue, $shiftExpr.retValue)}
+    | first=relExpr '>'  shiftExpr      { $retValue = exp.NewBinaryExpression(">", $first.retValue, $shiftExpr.retValue)}
+    | first=relExpr '>=' shiftExpr      { $retValue = exp.NewBinaryExpression(">=", $first.retValue, $shiftExpr.retValue)}
     | shiftExpr                         { $retValue = $shiftExpr.retValue}
     ;
 
 shiftExpr returns[*opt.LogicalExpression retValue]
-    : first=shiftExpr '<<' addExpr      { $retValue = opt.NewBinaryExpression("<<", $first.retValue, $addExpr.retValue)}
-    | first=shiftExpr '>>' addExpr      { $retValue = opt.NewBinaryExpression(">>", $first.retValue, $addExpr.retValue)}
+    : first=shiftExpr '<<' addExpr      { $retValue = exp.NewBinaryExpression("<<", $first.retValue, $addExpr.retValue)}
+    | first=shiftExpr '>>' addExpr      { $retValue = exp.NewBinaryExpression(">>", $first.retValue, $addExpr.retValue)}
     | addExpr                           { $retValue = $addExpr.retValue}
     ;
 
 addExpr returns[*opt.LogicalExpression retValue]
-    : first=addExpr '+' multExpr        { $retValue = opt.NewBinaryExpression("+", $first.retValue, $multExpr.retValue)}
-    | first=addExpr '-' multExpr        { $retValue = opt.NewBinaryExpression("-", $first.retValue, $multExpr.retValue)}
+    : first=addExpr '+' multExpr        { $retValue = exp.NewBinaryExpression("+", $first.retValue, $multExpr.retValue)}
+    | first=addExpr '-' multExpr        { $retValue = exp.NewBinaryExpression("-", $first.retValue, $multExpr.retValue)}
     | multExpr                          { $retValue = $multExpr.retValue}
     ;
 
 multExpr returns[*opt.LogicalExpression retValue]
-    : first=multExpr '*' unaryExpr      { $retValue = opt.NewBinaryExpression("*", $first.retValue, $unaryExpr.retValue)}
-    | first=multExpr '/' unaryExpr      { $retValue = opt.NewBinaryExpression("/", $first.retValue, $unaryExpr.retValue)}
-    | first=multExpr '%' unaryExpr      { $retValue = opt.NewBinaryExpression("%", $first.retValue, $unaryExpr.retValue)}
+    : first=multExpr '*' unaryExpr      { $retValue = exp.NewBinaryExpression("*", $first.retValue, $unaryExpr.retValue)}
+    | first=multExpr '/' unaryExpr      { $retValue = exp.NewBinaryExpression("/", $first.retValue, $unaryExpr.retValue)}
+    | first=multExpr '%' unaryExpr      { $retValue = exp.NewBinaryExpression("%", $first.retValue, $unaryExpr.retValue)}
     | unaryExpr                         { $retValue = $unaryExpr.retValue}
     ;
     
 //一元操作
 unaryExpr returns[*opt.LogicalExpression retValue]
-    : ('!' | 'not') primaryExpr         { $retValue = opt.NewNotUnaryExpression("!", $primaryExpr.retValue)}
-    | '~' primaryExpr                   { $retValue = opt.NewBitwiseNotUnaryExpression("~", $primaryExpr.retValue)}
-    | '-' primaryExpr                   { $retValue = opt.NewNegateUnaryExpression("-", $primaryExpr.retValue)}
+    : ('!' | 'not') primaryExpr         { $retValue = exp.NewNotUnaryExpression("!", $primaryExpr.retValue)}
+    | '~' primaryExpr                   { $retValue = exp.NewBitwiseNotUnaryExpression("~", $primaryExpr.retValue)}
+    | '-' primaryExpr                   { $retValue = exp.NewNegateUnaryExpression("-", $primaryExpr.retValue)}
     | primaryExpr                       { $retValue = $primaryExpr.retValue}
     ;
 
@@ -96,23 +99,23 @@ primaryExpr returns[*opt.LogicalExpression retValue]
         '(' expr                        { args = append(args, $expr.retValue)}
             (',' expr                   { args = append(args, $expr.retValue)}
             )*
-        ')'                             { $retValue = opt.NewFunctionExpression(opt.NewIdentifier($id.text), args)}
+        ')'                             { $retValue = exp.NewFunctionExpression(exp.NewIdentifier($id.text), args)}
     | id                                { $retValue = $id.retValue}
     ;
 
 //值类型
 value returns[*opt.LogicalExpression retValue]
-    : INTEGER     { $retValue = opt.NewIntegerValueExpression($INTEGER.text)}
-    | FLOAT       { $retValue = opt.NewFloatExpression($FLOAT.text)}
-    | STRING      { $retValue = opt.NewStringValueExpression($STRING.text)}
-    | DATETIME    { $retValue = opt.NewDateTimeExpression($DATETIME.text)}
-    | TRUE        { $retValue = opt.NewBooleanValueExpression(true)}
-    | FALSE       { $retValue = opt.NewBooleanValueExpression(false)}
+    : INTEGER     { $retValue = exp.NewIntegerValueExpression($INTEGER.text)}
+    | FLOAT       { $retValue = exp.NewFloatExpression($FLOAT.text)}
+    | STRING      { $retValue = exp.NewStringValueExpression($STRING.text)}
+    | DATETIME    { $retValue = exp.NewDateTimeExpression($DATETIME.text)}
+    | TRUE        { $retValue = exp.NewBooleanValueExpression(true)}
+    | FALSE       { $retValue = exp.NewBooleanValueExpression(false)}
     ;
 
 id returns[*opt.LogicalExpression retValue]
-    : NAME { $retValue = opt.NewIdentifierExpression($NAME.text)}
-    | VAR  { $retValue = opt.NewVarIdentifierExpression($VAR.text)}
+    : NAME { $retValue = exp.NewIdentifierExpression($NAME.text)}
+    | VAR  { $retValue = exp.NewVarIdentifierExpression($VAR.text)}
     ;
 
 TRUE    : 'true'  ;

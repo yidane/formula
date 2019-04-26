@@ -28,7 +28,7 @@ func (expression *BinaryExpression) Accept(context *opt.FormulaContext) *opt.Log
 }
 
 func (expression *BinaryExpression) Evaluate() *opt.Argument {
-	return opt.NewArgument(nil)
+	return opt.NewArgument((*expression.LeftExpression).Evaluate().Value.(int64)+(*expression.RightExpression).Evaluate().Value.(int64))
 }
 
 func (expression *BinaryExpression) ToString() string {

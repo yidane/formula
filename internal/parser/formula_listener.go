@@ -8,8 +8,8 @@ import "github.com/antlr/antlr4/runtime/Go/antlr"
 type FormulaListener interface {
 	antlr.ParseTreeListener
 
-	// EnterNcalc is called when entering the ncalc production.
-	EnterNcalc(c *NcalcContext)
+	// EnterCalc is called when entering the calc production.
+	EnterCalc(c *CalcContext)
 
 	// EnterExpr is called when entering the expr production.
 	EnterExpr(c *ExprContext)
@@ -56,8 +56,8 @@ type FormulaListener interface {
 	// EnterId is called when entering the id production.
 	EnterId(c *IdContext)
 
-	// ExitNcalc is called when exiting the ncalc production.
-	ExitNcalc(c *NcalcContext)
+	// ExitCalc is called when exiting the calc production.
+	ExitCalc(c *CalcContext)
 
 	// ExitExpr is called when exiting the expr production.
 	ExitExpr(c *ExprContext)

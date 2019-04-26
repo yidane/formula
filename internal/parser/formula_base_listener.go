@@ -21,11 +21,11 @@ func (s *BaseFormulaListener) EnterEveryRule(ctx antlr.ParserRuleContext) {}
 // ExitEveryRule is called when any rule is exited.
 func (s *BaseFormulaListener) ExitEveryRule(ctx antlr.ParserRuleContext) {}
 
-// EnterNcalc is called when production ncalc is entered.
-func (s *BaseFormulaListener) EnterNcalc(ctx *NcalcContext) {}
+// EnterCalc is called when production calc is entered.
+func (s *BaseFormulaListener) EnterCalc(ctx *CalcContext) {}
 
-// ExitNcalc is called when production ncalc is exited.
-func (s *BaseFormulaListener) ExitNcalc(ctx *NcalcContext) {}
+// ExitCalc is called when production calc is exited.
+func (s *BaseFormulaListener) ExitCalc(ctx *CalcContext) {}
 
 // EnterExpr is called when production expr is entered.
 func (s *BaseFormulaListener) EnterExpr(ctx *ExprContext) {}

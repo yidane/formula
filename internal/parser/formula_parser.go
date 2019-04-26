@@ -4,12 +4,15 @@ package parser // Formula
 
 import (
 	"fmt"
-	"github.com/yidane/formula/internal/exp"
-	"github.com/yidane/formula/opt"
 	"reflect"
 	"strconv"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+)
+
+import (
+	"github.com/yidane/formula/internal/exp"
+	"github.com/yidane/formula/opt"
 )
 
 // Suppress unused import errors
@@ -163,7 +166,7 @@ var symbolicNames = []string{
 }
 
 var ruleNames = []string{
-	"ncalc", "expr", "orExpr", "andExpr", "bitOrExpr", "bitXorExpr", "bitAndExpr",
+	"calc", "expr", "orExpr", "andExpr", "bitOrExpr", "bitXorExpr", "bitAndExpr",
 	"eqExpr", "relExpr", "shiftExpr", "addExpr", "multExpr", "unaryExpr", "primaryExpr",
 	"value", "id",
 }
@@ -240,7 +243,7 @@ const (
 
 // FormulaParser rules.
 const (
-	FormulaParserRULE_ncalc       = 0
+	FormulaParserRULE_calc        = 0
 	FormulaParserRULE_expr        = 1
 	FormulaParserRULE_orExpr      = 2
 	FormulaParserRULE_andExpr     = 3
@@ -258,8 +261,8 @@ const (
 	FormulaParserRULE_id          = 15
 )
 
-// INcalcContext is an interface to support dynamic dispatch.
-type INcalcContext interface {
+// ICalcContext is an interface to support dynamic dispatch.
+type ICalcContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
@@ -277,48 +280,48 @@ type INcalcContext interface {
 	// SetRetValue sets the retValue attribute.
 	SetRetValue(*opt.LogicalExpression)
 
-	// IsNcalcContext differentiates from other interfaces.
-	IsNcalcContext()
+	// IsCalcContext differentiates from other interfaces.
+	IsCalcContext()
 }
 
-type NcalcContext struct {
+type CalcContext struct {
 	*antlr.BaseParserRuleContext
 	parser   antlr.Parser
 	retValue *opt.LogicalExpression
 	_expr    IExprContext
 }
 
-func NewEmptyNcalcContext() *NcalcContext {
-	var p = new(NcalcContext)
+func NewEmptyCalcContext() *CalcContext {
+	var p = new(CalcContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = FormulaParserRULE_ncalc
+	p.RuleIndex = FormulaParserRULE_calc
 	return p
 }
 
-func (*NcalcContext) IsNcalcContext() {}
+func (*CalcContext) IsCalcContext() {}
 
-func NewNcalcContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *NcalcContext {
-	var p = new(NcalcContext)
+func NewCalcContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *CalcContext {
+	var p = new(CalcContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = FormulaParserRULE_ncalc
+	p.RuleIndex = FormulaParserRULE_calc
 
 	return p
 }
 
-func (s *NcalcContext) GetParser() antlr.Parser { return s.parser }
+func (s *CalcContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *NcalcContext) Get_expr() IExprContext { return s._expr }
+func (s *CalcContext) Get_expr() IExprContext { return s._expr }
 
-func (s *NcalcContext) Set_expr(v IExprContext) { s._expr = v }
+func (s *CalcContext) Set_expr(v IExprContext) { s._expr = v }
 
-func (s *NcalcContext) GetRetValue() *opt.LogicalExpression { return s.retValue }
+func (s *CalcContext) GetRetValue() *opt.LogicalExpression { return s.retValue }
 
-func (s *NcalcContext) SetRetValue(v *opt.LogicalExpression) { s.retValue = v }
+func (s *CalcContext) SetRetValue(v *opt.LogicalExpression) { s.retValue = v }
 
-func (s *NcalcContext) Expr() IExprContext {
+func (s *CalcContext) Expr() IExprContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), 0)
 
 	if t == nil {
@@ -328,33 +331,33 @@ func (s *NcalcContext) Expr() IExprContext {
 	return t.(IExprContext)
 }
 
-func (s *NcalcContext) EOF() antlr.TerminalNode {
+func (s *CalcContext) EOF() antlr.TerminalNode {
 	return s.GetToken(FormulaParserEOF, 0)
 }
 
-func (s *NcalcContext) GetRuleContext() antlr.RuleContext {
+func (s *CalcContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *NcalcContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *CalcContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *NcalcContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *CalcContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(FormulaListener); ok {
-		listenerT.EnterNcalc(s)
+		listenerT.EnterCalc(s)
 	}
 }
 
-func (s *NcalcContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *CalcContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(FormulaListener); ok {
-		listenerT.ExitNcalc(s)
+		listenerT.ExitCalc(s)
 	}
 }
 
-func (p *FormulaParser) Ncalc() (localctx INcalcContext) {
-	localctx = NewNcalcContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, FormulaParserRULE_ncalc)
+func (p *FormulaParser) Calc() (localctx ICalcContext) {
+	localctx = NewCalcContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 0, FormulaParserRULE_calc)
 
 	defer func() {
 		p.ExitRule()
@@ -378,13 +381,13 @@ func (p *FormulaParser) Ncalc() (localctx INcalcContext) {
 
 		var _x = p.Expr()
 
-		localctx.(*NcalcContext)._expr = _x
+		localctx.(*CalcContext)._expr = _x
 	}
 	{
 		p.SetState(33)
 		p.Match(FormulaParserEOF)
 	}
-	localctx.(*NcalcContext).retValue = localctx.(*NcalcContext).Get_expr().GetRetValue()
+	localctx.(*CalcContext).retValue = localctx.(*CalcContext).Get_expr().GetRetValue()
 
 	return localctx
 }
@@ -3196,7 +3199,7 @@ func (p *FormulaParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 			p.SetState(266)
 			p.Match(FormulaParserT__28)
 		}
-		localctx.(*PrimaryExprContext).retValue = exp.NewFunctionExpression(opt.NewIdentifier((func() string {
+		localctx.(*PrimaryExprContext).retValue = exp.NewFunctionExpression(exp.NewIdentifier((func() string {
 			if localctx.(*PrimaryExprContext).Get_id() == nil {
 				return ""
 			} else {
@@ -3604,7 +3607,7 @@ func (p *FormulaParser) Id() (localctx IIdContext) {
 
 			localctx.(*IdContext)._NAME = _m
 		}
-		localctx.(*IdContext).retValue = opt.NewIdentifierExpression((func() string {
+		localctx.(*IdContext).retValue = exp.NewIdentifierExpression((func() string {
 			if localctx.(*IdContext).Get_NAME() == nil {
 				return ""
 			} else {
@@ -3621,7 +3624,7 @@ func (p *FormulaParser) Id() (localctx IIdContext) {
 
 			localctx.(*IdContext)._VAR = _m
 		}
-		localctx.(*IdContext).retValue = opt.NewVarIdentifierExpression((func() string {
+		localctx.(*IdContext).retValue = exp.NewVarIdentifierExpression((func() string {
 			if localctx.(*IdContext).Get_VAR() == nil {
 				return ""
 			} else {

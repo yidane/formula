@@ -1,8 +1,10 @@
 package exp
 
 import (
+	"fmt"
 	"github.com/yidane/formula/opt"
 	"reflect"
+	"strconv"
 	"time"
 )
 
@@ -37,8 +39,13 @@ type IntegerValueExpression struct {
 }
 
 func NewIntegerValueExpression(value string) *opt.LogicalExpression {
-	var result opt.LogicalExpression = &IntegerValueExpression{
+	i,err:= strconv.ParseInt(value,10,10)
+	if err!=nil{
+		fmt.Println(err)
+	}
 
+	var result opt.LogicalExpression = &IntegerValueExpression{
+		Value:i,
 	}
 
 	return &result
@@ -48,8 +55,8 @@ func (*IntegerValueExpression) Accept(context *opt.FormulaContext) *opt.LogicalE
 	panic("implement me")
 }
 
-func (*IntegerValueExpression) Evaluate() *opt.Argument {
-	panic("implement me")
+func (expression *IntegerValueExpression) Evaluate() *opt.Argument {
+	return opt.NewArgumentWithType(expression.Value, reflect.Int64)
 }
 
 func (*IntegerValueExpression) ToString() string {
