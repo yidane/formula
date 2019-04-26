@@ -1,20 +1,24 @@
 package opt
 
-type Function interface {
-	Name() string
-	LowerName() string
-	Evaluate() Argument
+import "fmt"
+
+var defaultFunctionManager = functionManager{}
+
+type functionManager struct {
 }
 
-func MatchArgument(function Function, args ...LogicalExpression) error{
-	if args==nil||len(args)==0{
-		return nil
+func Register(f Function) error {
+	var i interface{} = f
+	if i == nil {
+		return fmt.Errorf("arg can not be nil")
 	}
+
+	_, ok := i.(BaseFunction)
+	if !ok {
+		return fmt.Errorf("function should impletment BaseFunction")
+	}
+
+	//cache Function
 
 	return nil
 }
-
-type FunctionManager struct {
-
-}
-

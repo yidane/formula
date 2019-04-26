@@ -24,6 +24,7 @@ func (expression *Expression) Compile() error {
 	lexer := parser.NewFormulaLexer(antlr.NewInputStream(expression.originalExpression))
 	formulaParser := parser.NewFormulaParser(antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel))
 	calcContext := formulaParser.Calc()
+	//formulaParser.AddErrorListener(antlr.ErrorListener())
 
 	//编译过程中，怎么解决异常？
 	//if calcContext!=nil{
