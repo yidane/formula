@@ -3,6 +3,7 @@ package opt
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 )
 
 type Argument struct {
@@ -90,6 +91,39 @@ func (arg *Argument) Float64() (float64, error) {
 		return arg.Value.(float64), nil
 	default:
 		return 0, fmt.Errorf("type %s can not convert to float64", arg.Type)
+	}
+}
+
+func (arg *Argument) String() string {
+	switch arg.Type {
+	case reflect.Bool:
+		return strconv.FormatBool(arg.Value.(bool))
+	case reflect.Int:
+		return strconv.Itoa(arg.Value.(int))
+	case reflect.Int8:
+		return strconv.Itoa(int(arg.Value.(int8)))
+	case reflect.Int16:
+		return strconv.Itoa(int(arg.Value.(int16)))
+	case reflect.Int32:
+		return strconv.Itoa(int(arg.Value.(int32)))
+	case reflect.Int64:
+		return strconv.FormatInt(arg.Value.(int64), 10)
+	case reflect.Uint:
+		return strconv.Itoa(int(arg.Value.(uint)))
+	case reflect.Uint8:
+		return strconv.Itoa(int(arg.Value.(uint8)))
+	case reflect.Uint16:
+		return strconv.Itoa(int(arg.Value.(uint16)))
+	case reflect.Uint32:
+		return strconv.Itoa(int(arg.Value.(uint32)))
+	case reflect.Uint64:
+		return strconv.FormatInt(int64(arg.Value.(uint64)), 10)
+	case reflect.Float32:
+		return strconv.FormatFloat(float64(arg.Value.(float32)), 'g', -1, 64)
+	case reflect.Float64:
+		return strconv.FormatFloat(arg.Value.(float64), 'g', -1, 64)
+	default:
+		return fmt.Sprint(arg.Value)
 	}
 }
 
