@@ -3,10 +3,16 @@ package fs
 import "github.com/yidane/formula/opt"
 
 type MinFunction struct {
-	opt.BaseFunction
 }
 
-func (f MinFunction) Evaluate(args ...opt.LogicalExpression) *opt.Argument {
+func (*MinFunction) Name() string {
 	panic("implement me")
 }
 
+func (*MinFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	panic("implement me")
+}
+
+func NewMinFunction() *MinFunction{
+	return &MinFunction{}
+}

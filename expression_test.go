@@ -1,8 +1,6 @@
 package formula
 
 import (
-	"fmt"
-	"github.com/yidane/formula/internal/fs"
 	"github.com/yidane/formula/opt"
 	"testing"
 )
@@ -24,15 +22,15 @@ func TestNewExpression(t *testing.T) {
 
 func TestImplements(t *testing.T) {
 	//通过断言判断类型是否实现接口或组合了其他结构
-	var i interface{} = opt.BaseFunction{}
-	f, ok := i.(opt.Function)
-
-	fmt.Println(ok)
-	fmt.Println(f)
-
-	var ii interface{} = fs.AddFunction{}
-	f, ok = ii.(opt.Function)
-	fmt.Println(ok)
+	//var i interface{} = opt.Function{}
+	//f, ok := i.(opt.Function)
+	//
+	//fmt.Println(ok)
+	//fmt.Println(f)
+	//
+	//var ii interface{} = fs.AddFunction{}
+	//f, ok = ii.(opt.Function)
+	//fmt.Println(ok)
 	//fmt.Println(f.Evaluate())
 
 	//d := importer.For("source", nil)

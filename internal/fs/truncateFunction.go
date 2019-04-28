@@ -3,10 +3,16 @@ package fs
 import "github.com/yidane/formula/opt"
 
 type TruncateFunction struct {
-	opt.BaseFunction
 }
 
-func (f TruncateFunction) Evaluate(args ...opt.LogicalExpression) *opt.Argument {
+func (*TruncateFunction) Name() string {
 	panic("implement me")
 }
 
+func (*TruncateFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	panic("implement me")
+}
+
+func NewTruncateFunction() *TruncateFunction {
+	return &TruncateFunction{}
+}

@@ -3,12 +3,16 @@ package fs
 import "github.com/yidane/formula/opt"
 
 type CosFunction struct {
-	opt.BaseFunction
 }
 
-func (f CosFunction) Evaluate(args ...opt.LogicalExpression) *opt.Argument {
+func (*CosFunction) Name() string {
 	panic("implement me")
 }
 
+func (*CosFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	panic("implement me")
+}
 
-
+func NewCosFunction() *CosFunction {
+	return &CosFunction{}
+}

@@ -1,24 +1,28 @@
 package opt
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
-var defaultFunctionManager = functionManager{}
+var defaultFunctionManager = make(map[string]*Function, 256)
+var rwLock sync.RWMutex
 
-type functionManager struct {
-}
-
-func Register(f Function) error {
-	var i interface{} = f
-	if i == nil {
-		return fmt.Errorf("arg can not be nil")
+func Register(f *Function) error {
+	if f == nil {
+		return fmt.Errorf("argument Function can not be nil")
 	}
 
-	_, ok := i.(BaseFunction)
-	if !ok {
-		return fmt.Errorf("function should impletment BaseFunction")
+	lowerName := (*f).Name()
+
+	rwLock.Lock()
+	defer rwLock.Unlock()
+
+	if _, ok := defaultFunctionManager[lowerName]; ok {
+		return fmt.Errorf("function %s duplicate", lowerName)
 	}
 
-	//cache Function
+	defaultFunctionManager[lowerName] = f
 
 	return nil
 }

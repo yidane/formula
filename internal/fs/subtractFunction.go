@@ -3,10 +3,16 @@ package fs
 import "github.com/yidane/formula/opt"
 
 type SubtractFunction struct {
-	opt.BaseFunction
 }
 
-func (f SubtractFunction) Evaluate(args ...opt.LogicalExpression) *opt.Argument {
+func (*SubtractFunction) Name() string {
 	panic("implement me")
 }
- 
+
+func (*SubtractFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	panic("implement me")
+}
+
+func NewSubtractFunction() *SubtractFunction {
+	return &SubtractFunction{}
+}

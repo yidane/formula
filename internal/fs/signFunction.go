@@ -3,10 +3,16 @@ package fs
 import "github.com/yidane/formula/opt"
 
 type SignFunction struct {
-	opt.BaseFunction
 }
 
-func (f SignFunction) Evaluate(args ...opt.LogicalExpression) *opt.Argument {
+func (*SignFunction) Name() string {
 	panic("implement me")
 }
 
+func (*SignFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	panic("implement me")
+}
+
+func NewSignFunction() *SignFunction {
+	return &SignFunction{}
+}

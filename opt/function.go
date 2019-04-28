@@ -5,37 +5,26 @@ import (
 )
 
 type Function interface {
-	Evaluate(args ...LogicalExpression) *Argument
+	Name() string
+	Evaluate(context *FormulaContext, args ...*LogicalExpression) (*Argument, error)
 }
 
-type BaseFunction struct {
-	context   FormulaContext
-	Name      func() string
-	LowerName func() string
-}
-
-func (f BaseFunction) SetContext(ctx FormulaContext) {
-	f.context = ctx
-}
-
-func (f BaseFunction) GetContext() FormulaContext {
-	return f.context
-}
-
-func (f BaseFunction) ReportError(err error) {
-	f.context.Error = err
-}
-
-func (f BaseFunction) HasError() bool{
-	return f.context.Error!=nil
-}
-
-func (f BaseFunction) MatchArgument(args ...LogicalExpression) {
-	if f.context.Error != nil {
-		return
-	}
-
+func MatchArgument(name string, args ...*LogicalExpression) error {
 	if args == nil || len(args) == 0 {
-		f.context.Error = fmt.Errorf(f.Name())
+		return fmt.Errorf(name)
 	}
+
+	return nil
+}
+
+func MatchOneArgument(name string, args ...*LogicalExpression) error {
+	if args == nil || len(args) != 1 {
+		return fmt.Errorf("")
+	}
+
+	return nil
+}
+
+func MatchTwoArgument(name string, args ...*LogicalExpression) error {
+	return nil
 }
