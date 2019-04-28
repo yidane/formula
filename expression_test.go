@@ -25,6 +25,23 @@ func TestNewExpression(t *testing.T) {
 	}
 }
 
+func TestCompute(t *testing.T) {
+	exp := NewExpression("(1+2)*3/6+3*2")
+	result, err := exp.Evaluate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	v, err := result.Float64()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if v != 7.5 {
+		t.Fatal()
+	}
+}
+
 func TestImplements(t *testing.T) {
 	//通过断言判断类型是否实现接口或组合了其他结构
 	//var i interface{} = opt.Function{}

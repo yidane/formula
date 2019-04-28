@@ -21,7 +21,7 @@ func NewExpression(expression string, options ...opt.Option) *Expression {
 	}
 }
 
-func (expression *Expression) Compile() error {
+func (expression *Expression) compile() error {
 	lexer := parser.NewFormulaLexer(antlr.NewInputStream(expression.originalExpression))
 	formulaParser := parser.NewFormulaParser(antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel))
 	calcContext := formulaParser.Calc()
@@ -38,7 +38,7 @@ func (expression *Expression) Compile() error {
 }
 
 func (expression *Expression) Evaluate() (*opt.Argument, error) {
-	err := expression.Compile()
+	err := expression.compile()
 	if err != nil {
 		return nil, err
 	}
