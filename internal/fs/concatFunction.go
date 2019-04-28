@@ -6,13 +6,13 @@ type ConcatFunction struct {
 }
 
 func (*ConcatFunction) Name() string {
-	panic("implement me")
+	return "concat"
 }
 
 func (*ConcatFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
 	panic("implement me")
 }
 
-func NewConcatFunction() *ConcatFunction{
+func NewConcatFunction() *ConcatFunction {
 	return &ConcatFunction{}
 }

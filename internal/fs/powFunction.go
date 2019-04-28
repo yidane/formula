@@ -6,7 +6,7 @@ type PowerFunction struct {
 }
 
 func (*PowerFunction) Name() string {
-	panic("implement me")
+	return "power"
 }
 
 func (*PowerFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

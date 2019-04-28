@@ -6,7 +6,7 @@ type Log10Function struct {
 }
 
 func (*Log10Function) Name() string {
-	panic("implement me")
+	return "log10"
 }
 
 func (*Log10Function) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

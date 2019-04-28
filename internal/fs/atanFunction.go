@@ -6,7 +6,7 @@ type AtanFunction struct {
 }
 
 func (*AtanFunction) Name() string {
-	panic("implement me")
+	return "atan"
 }
 
 func (*AtanFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

@@ -1,6 +1,9 @@
 package fs
 
-import "github.com/yidane/formula/opt"
+import (
+	"github.com/yidane/formula/internal/cache"
+	"github.com/yidane/formula/opt"
+)
 
 func init() {
 	fs := []opt.Function{
@@ -36,8 +39,8 @@ func init() {
 		NewTruncateFunction(),
 	}
 
-	for _, f := range fs {
-		err := opt.Register(&f)
+	for i := 0; i < len(fs); i++ {
+		err := cache.Register(&fs[i])
 		if err != nil {
 			panic(err)
 		}

@@ -6,7 +6,7 @@ type CosFunction struct {
 }
 
 func (*CosFunction) Name() string {
-	panic("implement me")
+	return "cos"
 }
 
 func (*CosFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

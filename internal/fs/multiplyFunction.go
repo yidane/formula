@@ -6,7 +6,7 @@ type MultiplyFunction struct {
 }
 
 func (*MultiplyFunction) Name() string {
-	panic("implement me")
+	return "*"
 }
 
 func (*MultiplyFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

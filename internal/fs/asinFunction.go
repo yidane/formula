@@ -6,14 +6,13 @@ type AsinFunction struct {
 }
 
 func (*AsinFunction) Name() string {
-	panic("implement me")
+	return "asin"
 }
 
 func (*AsinFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
 	panic("implement me")
 }
 
-func NewAsinFunction() *AsinFunction{
+func NewAsinFunction() *AsinFunction {
 	return &AsinFunction{}
 }
-

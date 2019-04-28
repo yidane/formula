@@ -6,7 +6,7 @@ type SubtractFunction struct {
 }
 
 func (*SubtractFunction) Name() string {
-	panic("implement me")
+	return "-"
 }
 
 func (*SubtractFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

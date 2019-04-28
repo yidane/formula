@@ -2,6 +2,7 @@ package formula
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	_ "github.com/yidane/formula/internal/fs"
 	"github.com/yidane/formula/internal/parser"
 	"github.com/yidane/formula/opt"
 	"strings"
@@ -36,20 +37,16 @@ func (expression *Expression) Compile() error {
 	return nil
 }
 
-func (expression *Expression) Evaluate() (interface{}, error) {
-	if expression.context.Error != nil {
-		return nil, expression.context.Error
-	}
-
+func (expression *Expression) Evaluate() (*opt.Argument, error) {
 	err := expression.Compile()
 	if err != nil {
 		return nil, err
 	}
 
-	result := (*expression.parsedExpression).Evaluate()
-	if expression.context.Error != nil {
-		return nil, expression.context.Error
+	result, err := (*expression.parsedExpression).Evaluate(expression.context)
+	if err != nil {
+		return nil, err
 	}
 
-	return result.Value, nil
+	return result, nil
 }

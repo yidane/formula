@@ -15,19 +15,14 @@ type StringValueExpression struct {
 
 func NewStringValueExpression(value string) *opt.LogicalExpression {
 	var result opt.LogicalExpression = &StringValueExpression{
-		Value:value,
+		Value: value,
 	}
 
 	return &result
 }
 
-func (expression *StringValueExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	expression.Context=context
-	return nil
-}
-
-func (expression *StringValueExpression) Evaluate() *opt.Argument {
-	return opt.NewArgumentWithType(expression.Value,reflect.String)
+func (expression *StringValueExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(expression.Value, reflect.String), nil
 }
 
 func (*StringValueExpression) ToString() string {
@@ -39,28 +34,20 @@ type IntegerValueExpression struct {
 }
 
 func NewIntegerValueExpression(value string) *opt.LogicalExpression {
-	i,err:= strconv.ParseInt(value,10,10)
-	if err!=nil{
+	i, err := strconv.ParseInt(value, 10, 10)
+	if err != nil {
 		fmt.Println(err)
 	}
 
 	var result opt.LogicalExpression = &IntegerValueExpression{
-		Value:i,
+		Value: i,
 	}
 
 	return &result
 }
 
-func (*IntegerValueExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	panic("implement me")
-}
-
-func (expression *IntegerValueExpression) Evaluate() *opt.Argument {
-	return opt.NewArgumentWithType(expression.Value, reflect.Int64)
-}
-
-func (*IntegerValueExpression) ToString() string {
-	panic("implement me")
+func (expression *IntegerValueExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(expression.Value, reflect.Int64), nil
 }
 
 type FloatExpression struct {
@@ -68,8 +55,7 @@ type FloatExpression struct {
 }
 
 func NewFloatExpression(value string) *opt.LogicalExpression {
-	var result opt.LogicalExpression = &FloatExpression{
-	}
+	var result opt.LogicalExpression = &FloatExpression{}
 
 	return &result
 }
@@ -78,11 +64,7 @@ func (*FloatExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpressi
 	panic("implement me")
 }
 
-func (*FloatExpression) Evaluate() *opt.Argument {
-	panic("implement me")
-}
-
-func (*FloatExpression) ToString() string {
+func (*FloatExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	panic("implement me")
 }
 
@@ -95,15 +77,7 @@ func NewDateTimeExpression(value string) *opt.LogicalExpression {
 	return &result
 }
 
-func (*DateTimeExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	panic("implement me")
-}
-
-func (*DateTimeExpression) Evaluate() *opt.Argument {
-	panic("implement me")
-}
-
-func (*DateTimeExpression) ToString() string {
+func (*DateTimeExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	panic("implement me")
 }
 
@@ -112,21 +86,13 @@ type BooleanValueExpression struct {
 }
 
 func NewBooleanValueExpression(value bool) *opt.LogicalExpression {
-	 var result opt.LogicalExpression = &BooleanValueExpression{
-		Value:value,
+	var result opt.LogicalExpression = &BooleanValueExpression{
+		Value: value,
 	}
 
-	 return &result
+	return &result
 }
 
-func (*BooleanValueExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	panic("implement me")
-}
-
-func (*BooleanValueExpression) Evaluate() *opt.Argument {
-	panic("implement me")
-}
-
-func (*BooleanValueExpression) ToString() string {
+func (*BooleanValueExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	panic("implement me")
 }

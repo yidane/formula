@@ -6,7 +6,7 @@ type SignFunction struct {
 }
 
 func (*SignFunction) Name() string {
-	panic("implement me")
+	return "sign"
 }
 
 func (*SignFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

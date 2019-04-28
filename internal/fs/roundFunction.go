@@ -6,7 +6,7 @@ type RoundFunction struct {
 }
 
 func (*RoundFunction) Name() string {
-	panic("implement me")
+	return "round"
 }
 
 func (*RoundFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

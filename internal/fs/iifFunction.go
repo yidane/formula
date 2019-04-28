@@ -6,7 +6,7 @@ type IIFFunction struct {
 }
 
 func (*IIFFunction) Name() string {
-	panic("implement me")
+	return "iif"
 }
 
 func (*IIFFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

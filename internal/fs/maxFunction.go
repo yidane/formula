@@ -6,7 +6,7 @@ type MaxFunction struct {
 }
 
 func (*MaxFunction) Name() string {
-	panic("implement me")
+	return "max"
 }
 
 func (*MaxFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

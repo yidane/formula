@@ -6,7 +6,7 @@ type CeilingFunction struct {
 }
 
 func (*CeilingFunction) Name() string {
-	panic("implement me")
+	return "ceiling"
 }
 
 func (*CeilingFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

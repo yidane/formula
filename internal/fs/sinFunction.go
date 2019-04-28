@@ -6,13 +6,13 @@ type SinFunction struct {
 }
 
 func (*SinFunction) Name() string {
-	panic("implement me")
+	return "sin"
 }
 
 func (*SinFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
 	panic("implement me")
 }
 
-func NewSinFunction() *SinFunction{
+func NewSinFunction() *SinFunction {
 	return &SinFunction{}
 }

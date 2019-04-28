@@ -6,7 +6,7 @@ type InFunction struct {
 }
 
 func (*InFunction) Name() string {
-	panic("implement me")
+	return "in"
 }
 
 func (*InFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

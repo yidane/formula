@@ -6,7 +6,7 @@ type TanFunction struct {
 }
 
 func (*TanFunction) Name() string {
-	panic("implement me")
+	return "tan"
 }
 
 func (*TanFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

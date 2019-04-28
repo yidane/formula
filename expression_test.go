@@ -15,7 +15,12 @@ func TestNewExpression(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if result.(int64) != 3 {
+	v, err := result.Int64()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if v != 3 {
 		t.Fatal()
 	}
 }

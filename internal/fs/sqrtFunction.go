@@ -6,7 +6,7 @@ type SqrtFunction struct {
 }
 
 func (*SqrtFunction) Name() string {
-	panic("implement me")
+	return "sqrt"
 }
 
 func (*SqrtFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

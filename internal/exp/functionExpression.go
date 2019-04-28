@@ -7,21 +7,11 @@ type FunctionExpression struct {
 }
 
 func NewFunctionExpression(id *IdentifierExpression, args []*opt.LogicalExpression) *opt.LogicalExpression {
-	var result opt.LogicalExpression =&FunctionExpression{}
+	var result opt.LogicalExpression = &FunctionExpression{}
 
 	return &result
 }
 
-func (*FunctionExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
+func (*FunctionExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	panic("implement me")
 }
-
-func (*FunctionExpression) Evaluate() *opt.Argument {
-	panic("implement me")
-}
-
-func (*FunctionExpression) ToString() string {
-	panic("implement me")
-}
-
-

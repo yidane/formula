@@ -6,7 +6,7 @@ type FloorFunction struct {
 }
 
 func (*FloorFunction) Name() string {
-	panic("implement me")
+	return "floor"
 }
 
 func (*FloorFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

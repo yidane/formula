@@ -16,7 +16,6 @@ type FormulaContext struct {
 	Option     Option
 	Parameters map[string]interface{}
 	Result     bytes.Buffer
-	Error      error
 }
 
 func mergeOption(options ...Option) Option {
