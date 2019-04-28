@@ -13,10 +13,10 @@ type Expression struct {
 	parsedExpression   *opt.LogicalExpression
 }
 
-func NewExpression(expression string, options opt.Options) *Expression {
+func NewExpression(expression string, options ...opt.Option) *Expression {
 	return &Expression{
 		originalExpression: strings.TrimSpace(expression),
-		context:opt.NewFormulaContext(options),
+		context:            opt.NewFormulaContext(options...),
 	}
 }
 
@@ -41,15 +41,15 @@ func (expression *Expression) Evaluate() (interface{}, error) {
 		return nil, expression.context.Error
 	}
 
-	err:=expression.Compile()
-	if err!=nil{
-		return nil,err
+	err := expression.Compile()
+	if err != nil {
+		return nil, err
 	}
 
-	result:= (*expression.parsedExpression).Evaluate()
-	if expression.context.Error!=nil{
-		return nil,expression.context.Error
+	result := (*expression.parsedExpression).Evaluate()
+	if expression.context.Error != nil {
+		return nil, expression.context.Error
 	}
 
-	return result.Value,nil
+	return result.Value, nil
 }
