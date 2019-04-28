@@ -55,17 +55,16 @@ type FloatExpression struct {
 }
 
 func NewFloatExpression(value string) *opt.LogicalExpression {
-	var result opt.LogicalExpression = &FloatExpression{}
+	v, _ := strconv.ParseFloat(value, 10)
+	var result opt.LogicalExpression = &FloatExpression{
+		Value: v,
+	}
 
 	return &result
 }
 
-func (*FloatExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	panic("implement me")
-}
-
-func (*FloatExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	panic("implement me")
+func (expression *FloatExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(expression.Value, reflect.Float64), nil
 }
 
 type DateTimeExpression struct {
@@ -93,6 +92,6 @@ func NewBooleanValueExpression(value bool) *opt.LogicalExpression {
 	return &result
 }
 
-func (*BooleanValueExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	panic("implement me")
+func (expression *BooleanValueExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(expression.Value, reflect.Bool), nil
 }

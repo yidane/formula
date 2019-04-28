@@ -11,7 +11,7 @@ func init() {
 		NewAcosFunction(),
 		NewAsinFunction(),
 		NewAtanFunction(),
-		NewCeilingFunction(),
+		NewCeilFunction(),
 		NewConcatFunction(),
 		NewCosFunction(),
 		NewDivideFunction(),

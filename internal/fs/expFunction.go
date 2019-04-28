@@ -1,6 +1,10 @@
 package fs
 
-import "github.com/yidane/formula/opt"
+import (
+	"github.com/yidane/formula/opt"
+	"math"
+	"reflect"
+)
 
 type ExpFunction struct {
 }
@@ -9,8 +13,23 @@ func (*ExpFunction) Name() string {
 	return "exp"
 }
 
-func (*ExpFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	panic("implement me")
+func (f *ExpFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	err := opt.MatchOneArgument(f.Name(), args...)
+	if err != nil {
+		return nil, err
+	}
+
+	arg0, err := (*args[0]).Evaluate(context)
+	if err != nil {
+		return nil, err
+	}
+
+	v0, err := arg0.Float64()
+	if err != nil {
+		return nil, err
+	}
+
+	return opt.NewArgumentWithType(math.Exp(v0), reflect.Float64), nil
 }
 
 func NewExpFunction() *ExpFunction {

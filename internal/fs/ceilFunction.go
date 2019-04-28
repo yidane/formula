@@ -32,6 +32,6 @@ func (f *CeilFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logica
 	return opt.NewArgumentWithType(math.Ceil(v), reflect.Float64), nil
 }
 
-func NewCeilingFunction() *CeilFunction {
+func NewCeilFunction() *CeilFunction {
 	return &CeilFunction{}
 }
