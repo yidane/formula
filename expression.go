@@ -1,6 +1,8 @@
 package formula
 
 import (
+	"errors"
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/yidane/formula/internal/cache"
 	"github.com/yidane/formula/internal/exp"
@@ -52,6 +54,24 @@ func (expression *Expression) compile() error {
 
 func (expression *Expression) OriginalString() string {
 	return expression.originalExpression
+}
+
+func (expression *Expression) AddParameter(name string, value interface{}) error {
+	name = strings.TrimSpace(name)
+	if name == "" {
+		return errors.New("argument name can not be empty")
+	}
+
+	if _, ok := expression.context.Parameters[name]; ok {
+		return fmt.Errorf("argument %s dureplate", name)
+	}
+
+	expression.context.Parameters[name] = value
+	return nil
+}
+
+func (expression *Expression) ResetParameters() error {
+	expression.context.Parameters = make(map[string]interface{})
 }
 
 func (expression *Expression) Evaluate() (*opt.Argument, error) {

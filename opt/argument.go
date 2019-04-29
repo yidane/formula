@@ -26,6 +26,10 @@ func NewArgument(v interface{}) *Argument {
 }
 
 func NewArgumentWithType(v interface{}, t reflect.Kind) *Argument {
+	//todo：此处考虑校验参数类型是否匹配
+	//if reflect.TypeOf(v).Kind() != t {
+	//}
+
 	return &Argument{
 		Value: v,
 		Type:  t,
