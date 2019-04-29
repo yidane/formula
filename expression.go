@@ -3,6 +3,7 @@ package formula
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/yidane/formula/internal/cache"
+	"github.com/yidane/formula/internal/exp"
 	_ "github.com/yidane/formula/internal/fs"
 	"github.com/yidane/formula/internal/parser"
 	"github.com/yidane/formula/opt"
@@ -23,6 +24,11 @@ func NewExpression(expression string, options ...opt.Option) *Expression {
 }
 
 func (expression *Expression) compile() error {
+	if expression.originalExpression == "" {
+		expression.parsedExpression = exp.NewEmptyExpression()
+		return nil
+	}
+
 	logicExpression := cache.Restore(expression.context.Option, expression.originalExpression)
 	if logicExpression != nil {
 		expression.parsedExpression = logicExpression
