@@ -29,7 +29,7 @@ func (*MultiplyFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logi
 	}
 
 	if v0 == 0 {
-		return opt.NewArgumentWithType(0, reflect.Float64), nil
+		return opt.NewArgumentWithType(float64(0), reflect.Float64), nil
 	}
 
 	arg1, err := (*args[1]).Evaluate(context)
@@ -43,7 +43,7 @@ func (*MultiplyFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logi
 	}
 
 	if v1 == 0 {
-		return opt.NewArgumentWithType(0, reflect.Float64), nil
+		return opt.NewArgumentWithType(float64(0), reflect.Float64), nil
 	}
 
 	return opt.NewArgumentWithType(v0*v1, reflect.Float64), nil
