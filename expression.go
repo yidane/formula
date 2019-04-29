@@ -44,6 +44,10 @@ func (expression *Expression) compile() error {
 	return nil
 }
 
+func (expression *Expression) OriginalString() string {
+	return expression.originalExpression
+}
+
 func (expression *Expression) Evaluate() (*opt.Argument, error) {
 	err := expression.compile()
 	if err != nil {
