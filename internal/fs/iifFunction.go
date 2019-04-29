@@ -24,7 +24,7 @@ func (f *IIFFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logical
 	}
 
 	if arg0.Type != reflect.Bool {
-		return nil, fmt.Errorf("the first argument of function %s should be bool")
+		return nil, fmt.Errorf("the first argument of function %s should be bool", f.Name())
 	}
 
 	if arg0.Value.(bool) {

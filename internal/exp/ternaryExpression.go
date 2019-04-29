@@ -1,6 +1,10 @@
 package exp
 
-import "github.com/yidane/formula/opt"
+import (
+	"fmt"
+	"github.com/yidane/formula/opt"
+	"reflect"
+)
 
 type TernaryExpression struct {
 	Left   *opt.LogicalExpression
@@ -18,6 +22,19 @@ func NewTernaryExpression(left, mid, right *opt.LogicalExpression) *opt.LogicalE
 	return &result
 }
 
-func (*TernaryExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	panic("implement me")
+func (expression *TernaryExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	left, err := (*expression.Left).Evaluate(context)
+	if err != nil {
+		return nil, err
+	}
+
+	if left.Type != reflect.Bool {
+		return nil, fmt.Errorf("ternary need bool first")
+	}
+
+	if left.Value.(bool) {
+		return (*expression.Middle).Evaluate(context)
+	}
+
+	return (*expression.Right).Evaluate(context)
 }

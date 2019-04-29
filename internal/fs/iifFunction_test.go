@@ -1,7 +1,8 @@
 package fs
 
 import (
-	"reflect"
+	"fmt"
+	"github.com/yidane/formula/internal/exp"
 	"testing"
 
 	"github.com/yidane/formula/opt"
@@ -9,28 +10,33 @@ import (
 
 func TestIIFFunction_Evaluate(t *testing.T) {
 	type args struct {
-		context *opt.FormulaContext
-		args    []*opt.LogicalExpression
+		arg0 bool
+		arg1 string
+		arg2 string
 	}
-	tests := []struct {
-		name    string
-		i       *IIFFunction
-		args    args
-		want    *opt.Argument
-		wantErr bool
-	}{
-		// TODO: Add test cases.
+	tests := []args{
+		{true, "1", "2"},
+		{false, "1", "2"},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(fmt.Sprint(tt.arg0), func(t *testing.T) {
 			i := &IIFFunction{}
-			got, err := i.Evaluate(tt.args.context, tt.args.args...)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("IIFFunction.Evaluate() error = %v, wantErr %v", err, tt.wantErr)
-				return
+			exp0 := exp.NewBooleanValueExpression(tt.arg0)
+			exp1 := exp.NewStringValueExpression(tt.arg1)
+			exp2 := exp.NewStringValueExpression(tt.arg2)
+
+			result, err := i.Evaluate(nil, []*opt.LogicalExpression{exp0, exp1, exp2}...)
+			if err != nil {
+				t.Fatal(err)
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("IIFFunction.Evaluate() = %v, want %v", got, tt.want)
+
+			r := tt.arg1
+			if !tt.arg0 {
+				r = tt.arg2
+			}
+
+			if result.String() != r {
+				t.Fatal()
 			}
 		})
 	}

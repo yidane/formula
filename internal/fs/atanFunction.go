@@ -14,17 +14,7 @@ func (*AtanFunction) Name() string {
 }
 
 func (f *AtanFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	err := opt.MatchOneArgument(f.Name(), args...)
-	if err != nil {
-		return nil, err
-	}
-
-	arg0, err := (*args[0]).Evaluate(context)
-	if err != nil {
-		return nil, err
-	}
-
-	v, err := arg0.Float64()
+	v, err := ParseFloat(f.Name(), context, args...)
 	if err != nil {
 		return nil, err
 	}

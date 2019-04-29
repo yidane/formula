@@ -46,3 +46,22 @@ func init() {
 		}
 	}
 }
+
+func ParseFloat(name string, context *opt.FormulaContext, args ...*opt.LogicalExpression) (float64, error) {
+	err := opt.MatchOneArgument(name, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	arg0, err := (*args[0]).Evaluate(context)
+	if err != nil {
+		return 0, err
+	}
+
+	v, err := arg0.Float64()
+	if err != nil {
+		return 0, err
+	}
+
+	return v, nil
+}

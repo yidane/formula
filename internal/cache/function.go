@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-var defaultFunctionManager = make(map[string]*opt.Function, 256)
+var defaultFunctionCache = make(map[string]*opt.Function, 256)
 var rwLock sync.RWMutex
 
 func Register(f *opt.Function) error {
@@ -20,18 +20,18 @@ func Register(f *opt.Function) error {
 	rwLock.Lock()
 	defer rwLock.Unlock()
 
-	if _, ok := defaultFunctionManager[lowerName]; ok {
+	if _, ok := defaultFunctionCache[lowerName]; ok {
 		return fmt.Errorf("function %s duplicate", lowerName)
 	}
 
-	defaultFunctionManager[lowerName] = f
+	defaultFunctionCache[lowerName] = f
 
 	return nil
 }
 
 func FindFunction(name string) (*opt.Function, error) {
 	name = strings.ToLower(strings.TrimSpace(name))
-	if f, ok := defaultFunctionManager[name]; ok {
+	if f, ok := defaultFunctionCache[name]; ok {
 		return f, nil
 	}
 

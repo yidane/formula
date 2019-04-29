@@ -2,6 +2,7 @@ package formula
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/yidane/formula/internal/cache"
 	_ "github.com/yidane/formula/internal/fs"
 	"github.com/yidane/formula/internal/parser"
 	"github.com/yidane/formula/opt"
@@ -22,6 +23,12 @@ func NewExpression(expression string, options ...opt.Option) *Expression {
 }
 
 func (expression *Expression) compile() error {
+	logicExpression := cache.Restore(expression.context.Option, expression.originalExpression)
+	if logicExpression != nil {
+		expression.parsedExpression = logicExpression
+		return nil
+	}
+
 	lexer := parser.NewFormulaLexer(antlr.NewInputStream(expression.originalExpression))
 	formulaParser := parser.NewFormulaParser(antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel))
 	calcContext := formulaParser.Calc()

@@ -7,15 +7,7 @@ type UnaryExpression struct {
 	Expression opt.LogicalExpression
 }
 
-func (*UnaryExpression) Accept(context *opt.FormulaContext) *opt.LogicalExpression {
-	panic("implement me")
-}
-
 func (*UnaryExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	panic("implement me")
-}
-
-func (*UnaryExpression) ToString() string {
 	panic("implement me")
 }
 
