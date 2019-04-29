@@ -3199,7 +3199,7 @@ func (p *FormulaParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 			p.SetState(266)
 			p.Match(FormulaParserT__28)
 		}
-		localctx.(*PrimaryExprContext).retValue = exp.NewFunctionExpression(exp.NewIdentifier((func() string {
+		localctx.(*PrimaryExprContext).retValue = exp.NewFunctionExpression(exp.NewIdentifierExpression((func() string {
 			if localctx.(*PrimaryExprContext).Get_id() == nil {
 				return ""
 			} else {

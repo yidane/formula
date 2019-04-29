@@ -2,6 +2,7 @@ package formula
 
 import (
 	"github.com/yidane/formula/opt"
+	"math"
 	"testing"
 )
 
@@ -42,7 +43,7 @@ func TestCompute(t *testing.T) {
 	}
 }
 
-func TestExpression(t *testing.T) {
+func TestCommonExpression(t *testing.T) {
 	testCases := []struct {
 		exp    string
 		result float64
@@ -55,6 +56,35 @@ func TestExpression(t *testing.T) {
 		{"(1+2)*3/(2+4-3+4-1)", 1.5},
 		{"(1+2)*3/(2+4-3+4-1*0-1)", 1.5},
 		{"(1+2)*3/(2+4-3+4-1*0-1)*0", 0},
+	}
+
+	for _, tt := range testCases {
+		expression := NewExpression(tt.exp)
+		result, err := expression.Evaluate()
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		v, err := result.Float64()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if v != tt.result {
+			t.Fatal()
+		}
+	}
+}
+
+func TestFunctionExpression(t *testing.T) {
+	testCases := []struct {
+		exp    string
+		result float64
+	}{
+		{"sin(30)", math.Sin(30)},
+		{"cos(30)", math.Cos(30)},
+		{"tan(24)", math.Tan(24)},
 	}
 
 	for _, tt := range testCases {

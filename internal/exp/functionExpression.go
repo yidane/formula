@@ -7,11 +7,11 @@ import (
 
 type FunctionExpression struct {
 	BaseExpression
-	Identifier *IdentifierExpression
+	Identifier *opt.LogicalExpression
 	Arguments  []*opt.LogicalExpression
 }
 
-func NewFunctionExpression(id *IdentifierExpression, args []*opt.LogicalExpression) *opt.LogicalExpression {
+func NewFunctionExpression(id *opt.LogicalExpression, args []*opt.LogicalExpression) *opt.LogicalExpression {
 	var result opt.LogicalExpression = &FunctionExpression{
 		Identifier: id,
 		Arguments:  args,
@@ -21,7 +21,8 @@ func NewFunctionExpression(id *IdentifierExpression, args []*opt.LogicalExpressi
 }
 
 func (expression *FunctionExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	f, err := cache.FindFunction(expression.Identifier.Name)
+	name, _ := (*expression.Identifier).Evaluate(context)
+	f, err := cache.FindFunction(name.String())
 	if err != nil {
 		return nil, err
 	}

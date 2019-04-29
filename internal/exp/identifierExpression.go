@@ -3,6 +3,7 @@ package exp
 import (
 	"fmt"
 	"github.com/yidane/formula/opt"
+	"reflect"
 )
 
 type IdentifierExpression struct {
@@ -11,11 +12,7 @@ type IdentifierExpression struct {
 }
 
 func (expression *IdentifierExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	if p, ok := expression.Context.Parameters[expression.Name]; ok {
-		return opt.NewArgument(p), nil
-	}
-
-	return nil, fmt.Errorf("variable %s can not be resolved", expression.Name)
+	return opt.NewArgumentWithType(expression.Name, reflect.String), nil
 }
 
 func NewIdentifierExpression(name string) *opt.LogicalExpression {
@@ -26,8 +23,9 @@ func NewIdentifierExpression(name string) *opt.LogicalExpression {
 	return &result
 }
 
-func NewIdentifier(name string) *IdentifierExpression {
-	return &IdentifierExpression{}
+type VarIdentifierExpression struct {
+	BaseExpression
+	Name string
 }
 
 //NewVarIdentifierExpression create new custom parameter which output like '[Parameter]'
@@ -37,4 +35,12 @@ func NewVarIdentifierExpression(name string) *opt.LogicalExpression {
 	}
 
 	return &result
+}
+
+func (expression *VarIdentifierExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	if p, ok := expression.Context.Parameters[expression.Name]; ok {
+		return opt.NewArgument(p), nil
+	}
+
+	return nil, fmt.Errorf("variable %s can not be resolved", expression.Name)
 }

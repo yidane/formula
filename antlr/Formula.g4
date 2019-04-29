@@ -99,7 +99,7 @@ primaryExpr returns[*opt.LogicalExpression retValue]
         '(' expr                        { args = append(args, $expr.retValue)}
             (',' expr                   { args = append(args, $expr.retValue)}
             )*
-        ')'                             { $retValue = exp.NewFunctionExpression(exp.NewIdentifier($id.text), args)}
+        ')'                             { $retValue = exp.NewFunctionExpression(exp.NewIdentifierExpression($id.text), args)}
     | id                                { $retValue = $id.retValue}
     ;
 
