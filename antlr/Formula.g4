@@ -111,6 +111,7 @@ value returns[*opt.LogicalExpression retValue]
     | DATETIME    { $retValue = exp.NewDateTimeExpression($DATETIME.text)}
     | TRUE        { $retValue = exp.NewBooleanValueExpression(true)}
     | FALSE       { $retValue = exp.NewBooleanValueExpression(false)}
+    | π           { $retValue = exp.NewPiExpression()}
     ;
 
 id returns[*opt.LogicalExpression retValue]
@@ -125,6 +126,7 @@ INTEGER : DIGIT+  ;
 DATETIME: '#' (~('#')*) '#' ;
 VAR     : '[' (~(']')*) ']' ;
 E       : ('E'|'e') ('+'|'-')? DIGIT+ ;
+π       : 'π' ;
 
 FLOAT
     : DIGIT* '.' DIGIT+ E?

@@ -3,6 +3,7 @@ package exp
 import (
 	"github.com/yidane/formula/opt"
 	"log"
+	"math"
 	"reflect"
 	"strconv"
 	"time"
@@ -69,6 +70,19 @@ func NewFloatExpression(value string) *opt.LogicalExpression {
 
 func (expression *FloatExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	return opt.NewArgumentWithType(expression.Value, reflect.Float64), nil
+}
+
+type PiExpression struct {
+}
+
+func (*PiExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(math.Pi, reflect.Float64), nil
+}
+
+func NewPiExpression() *opt.LogicalExpression {
+	var result opt.LogicalExpression = &PiExpression{}
+
+	return &result
 }
 
 type DateTimeExpression struct {

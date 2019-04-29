@@ -82,9 +82,10 @@ func TestFunctionExpression(t *testing.T) {
 		exp    string
 		result float64
 	}{
-		{"sin(30)", math.Sin(30)},
-		{"cos(30)", math.Cos(30)},
-		{"tan(24)", math.Tan(24)},
+		{"sin(π/2)", math.Sin(math.Pi / 2)},
+		{"cos(π/2)", math.Cos(math.Pi / 2)},
+		{"tan(π/2)", math.Tan(math.Pi / 2)},
+		{"asin(sin(π/2))", math.Pi / 2},
 	}
 
 	for _, tt := range testCases {
