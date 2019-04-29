@@ -145,3 +145,16 @@ func (arg *Argument) IsNumber() bool {
 		arg.Type == reflect.Uint32 ||
 		arg.Type == reflect.Uint64
 }
+
+func (arg *Argument) IsInteger() bool {
+	return arg.Type == reflect.Int ||
+		arg.Type == reflect.Int8 ||
+		arg.Type == reflect.Int16 ||
+		arg.Type == reflect.Int32 ||
+		arg.Type == reflect.Int64 ||
+		arg.Type == reflect.Uint ||
+		arg.Type == reflect.Uint8 ||
+		arg.Type == reflect.Uint16 ||
+		arg.Type == reflect.Uint32 ||
+		arg.Type == reflect.Uint64
+}

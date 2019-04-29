@@ -143,6 +143,42 @@ func BenchmarkOne(b *testing.B) {
 	}
 }
 
+func BenchmarkComplexOne(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		expression := NewExpression("(1>0)?(1+2)*4/2+(3+3)/2-1+1*4+99*10:-1")
+		result, err := expression.Evaluate()
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		v, err := result.Int64()
+		if err != nil {
+			b.Fatal(err)
+		}
+		if v != 1002 {
+			b.Fatal()
+		}
+	}
+}
+
+func BenchmarkSin(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		expression := NewExpression("2*asin(sin(π/2))")
+		result, err := expression.Evaluate()
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		v, err := result.Float64()
+		if err != nil {
+			b.Fatal(err)
+		}
+		if v != math.Pi {
+			b.Fatal()
+		}
+	}
+}
+
 func TestImplements(t *testing.T) {
 	//通过断言判断类型是否实现接口或组合了其他结构
 	//var i interface{} = opt.Function{}

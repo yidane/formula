@@ -85,6 +85,7 @@ func NewPiExpression() *opt.LogicalExpression {
 	return &result
 }
 
+//todo:时间表达式如何处理？
 type DateTimeExpression struct {
 	Value time.Time
 }
@@ -94,8 +95,8 @@ func NewDateTimeExpression(value string) *opt.LogicalExpression {
 	return &result
 }
 
-func (*DateTimeExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	panic("implement me")
+func (expression *DateTimeExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
+	return opt.NewArgumentWithType(expression.Value.Second(), reflect.Int64), nil
 }
 
 type BooleanValueExpression struct {
