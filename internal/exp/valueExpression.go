@@ -9,7 +9,7 @@ import (
 )
 
 type StringValueExpression struct {
-	opt.BaseExpression
+	BaseExpression
 	Value string
 }
 

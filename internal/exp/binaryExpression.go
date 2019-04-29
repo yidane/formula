@@ -6,7 +6,7 @@ import (
 )
 
 type BinaryExpression struct {
-	opt.BaseExpression
+	BaseExpression
 	Name            string
 	LeftExpression  *opt.LogicalExpression
 	RightExpression *opt.LogicalExpression

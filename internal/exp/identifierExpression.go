@@ -6,7 +6,7 @@ import (
 )
 
 type IdentifierExpression struct {
-	opt.BaseExpression
+	BaseExpression
 	Name string
 }
 

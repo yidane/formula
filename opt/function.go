@@ -18,13 +18,17 @@ func MatchArgument(name string, args ...*LogicalExpression) error {
 }
 
 func MatchOneArgument(name string, args ...*LogicalExpression) error {
-	if args == nil || len(args) != 1 {
-		return fmt.Errorf("")
+	if len(args) != 1 {
+		return fmt.Errorf("function %s required only one argument", name)
 	}
 
 	return nil
 }
 
 func MatchTwoArgument(name string, args ...*LogicalExpression) error {
+	if len(args) != 2 {
+		return fmt.Errorf("function %s required only two arguments", name)
+	}
+
 	return nil
 }
