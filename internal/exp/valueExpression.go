@@ -10,7 +10,6 @@ import (
 )
 
 type StringValueExpression struct {
-	BaseExpression
 	Value string
 }
 

@@ -6,7 +6,6 @@ import (
 )
 
 type FunctionExpression struct {
-	BaseExpression
 	Identifier *opt.LogicalExpression
 	Arguments  []*opt.LogicalExpression
 }

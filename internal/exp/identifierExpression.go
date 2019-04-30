@@ -7,7 +7,6 @@ import (
 )
 
 type IdentifierExpression struct {
-	BaseExpression
 	Name string
 }
 
@@ -24,21 +23,20 @@ func NewIdentifierExpression(name string) *opt.LogicalExpression {
 }
 
 type VarIdentifierExpression struct {
-	BaseExpression
 	Name string
 }
 
 //NewVarIdentifierExpression create new custom parameter which output like '[Parameter]'
 func NewVarIdentifierExpression(name string) *opt.LogicalExpression {
-	var result opt.LogicalExpression = &IdentifierExpression{
-		Name: name[1 : len(name)-2],
+	var result opt.LogicalExpression = &VarIdentifierExpression{
+		Name: name[1 : len(name)-1],
 	}
 
 	return &result
 }
 
 func (expression *VarIdentifierExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
-	if p, ok := expression.Context.Parameters[expression.Name]; ok {
+	if p, ok := context.Parameters[expression.Name]; ok {
 		return opt.NewArgument(p), nil
 	}
 

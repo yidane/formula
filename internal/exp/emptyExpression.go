@@ -6,7 +6,6 @@ import (
 )
 
 type EmptyExpression struct {
-	BaseExpression
 }
 
 func NewEmptyExpression() *opt.LogicalExpression {

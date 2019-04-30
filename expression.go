@@ -70,9 +70,8 @@ func (expression *Expression) AddParameter(name string, value interface{}) error
 	return nil
 }
 
-func (expression *Expression) ResetParameters() error {
+func (expression *Expression) ResetParameters() {
 	expression.context.Parameters = make(map[string]interface{})
-	return nil
 }
 
 func (expression *Expression) Evaluate() (*opt.Argument, error) {

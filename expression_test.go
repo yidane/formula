@@ -107,6 +107,48 @@ func TestFunctionExpression(t *testing.T) {
 	}
 }
 
+func TestExpressionWithParameter(t *testing.T) {
+	const expressionString = "[i]+[j]"
+	testCases := []struct {
+		i int
+		j int
+	}{
+		{1, 1},
+		{1, 2},
+		{2, 3},
+		{3, 4},
+		{4, 5},
+	}
+
+	expression := NewExpression(expressionString)
+
+	for _, tt := range testCases {
+		expression.ResetParameters()
+		err := expression.AddParameter("i", tt.i)
+		if err != nil {
+			t.Fatal(err)
+		}
+		err = expression.AddParameter("j", tt.j)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		result, err := expression.Evaluate()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		v, err := result.Int64()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if v != int64(tt.i+tt.j) {
+			t.Fatal()
+		}
+	}
+}
+
 func BenchmarkOnePlusOne(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		expression := NewExpression("1+1")
