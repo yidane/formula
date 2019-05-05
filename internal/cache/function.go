@@ -16,6 +16,7 @@ func Register(f *opt.Function) error {
 	}
 
 	lowerName := (*f).Name()
+	lowerName = strings.ToLower(strings.TrimSpace(lowerName))
 
 	rwLock.Lock()
 	defer rwLock.Unlock()
