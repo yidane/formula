@@ -1,6 +1,7 @@
 package formula
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -26,30 +27,33 @@ func NewExpression(expression string, options ...opt.Option) *Expression {
 }
 
 func (expression *Expression) compile() error {
+	//handle empty expression
 	if expression.originalExpression == "" {
 		expression.parsedExpression = exp.NewEmptyExpression()
 		return nil
 	}
 
+	//restore expression from cache
 	logicExpression := cache.Restore(expression.context.Option, expression.originalExpression)
 	if logicExpression != nil {
 		expression.parsedExpression = logicExpression
 		return nil
 	}
 
+	//compile expression
 	lexer := parser.NewFormulaLexer(antlr.NewInputStream(expression.originalExpression))
 	formulaParser := parser.NewFormulaParser(antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel))
+
+	//handle compile error
+	errListener := newFormulaErrorListener()
+	formulaParser.AddErrorListener(errListener)
 	calcContext := formulaParser.Calc()
 
-	//formulaParser.AddErrorListener(antlr.ErrorListener())
-
-	//编译过程中，怎么解决异常？
-	//if calcContext!=nil{
-	//
-	//}
+	if errListener.HasError() {
+		return errListener.Error()
+	}
 
 	expression.parsedExpression = calcContext.GetRetValue()
-
 	return nil
 }
 
@@ -87,4 +91,33 @@ func (expression *Expression) Evaluate() (*opt.Argument, error) {
 	}
 
 	return result, nil
+}
+
+type formulaErrorListener struct {
+	buf bytes.Buffer
+}
+
+func newFormulaErrorListener() *formulaErrorListener {
+	return new(formulaErrorListener)
+}
+
+func (l *formulaErrorListener) HasError() bool {
+	return l.buf.Len() > 0
+}
+
+func (l *formulaErrorListener) Error() error {
+	return errors.New(l.buf.String())
+}
+
+func (l *formulaErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
+	l.buf.WriteString(msg)
+}
+
+func (*formulaErrorListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+}
+
+func (*formulaErrorListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+}
+
+func (*formulaErrorListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
 }

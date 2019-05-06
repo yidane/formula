@@ -26,6 +26,18 @@ func TestNewExpression(t *testing.T) {
 	}
 }
 
+func TestErrorExpression(t *testing.T) {
+	exp := NewExpression("1++1")
+	result, err := exp.Evaluate()
+	if err == nil {
+		t.Fatal("error should not be nil")
+	}
+
+	if result != nil {
+		t.Fatal("result should be nil")
+	}
+}
+
 func TestCompute(t *testing.T) {
 	exp := NewExpression("(1+2)*3/6+3*2")
 	result, err := exp.Evaluate()
