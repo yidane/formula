@@ -18,9 +18,10 @@ func TestIIFFunction_Evaluate(t *testing.T) {
 		{true, "1", "2"},
 		{false, "1", "2"},
 	}
+
+	i := NewIIFFunction()
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt.arg0), func(t *testing.T) {
-			i := &IIFFunction{}
 			exp0 := exp.NewBooleanValueExpression(tt.arg0)
 			exp1 := exp.NewStringValueExpression(tt.arg1)
 			exp2 := exp.NewStringValueExpression(tt.arg2)

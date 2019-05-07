@@ -6,14 +6,14 @@ import (
 	"reflect"
 )
 
-type ModuloFunction struct {
+type ModFunction struct {
 }
 
-func (*ModuloFunction) Name() string {
+func (*ModFunction) Name() string {
 	return "mod"
 }
 
-func (f *ModuloFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+func (f *ModFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
 	v, err := ParseFloat(f.Name(), context, args...)
 	if err != nil {
 		return nil, err
@@ -22,6 +22,6 @@ func (f *ModuloFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logi
 	return opt.NewArgumentWithType(math.Mod(v, 1), reflect.Float64), nil
 }
 
-func NewModuloFunction() *ModuloFunction {
-	return &ModuloFunction{}
+func NewModuloFunction() *ModFunction {
+	return &ModFunction{}
 }

@@ -13,8 +13,8 @@ func (*DivideFunction) Name() string {
 	return "/"
 }
 
-func (*DivideFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	err := opt.MatchTwoArgument("+", args...)
+func (f *DivideFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	err := opt.MatchTwoArgument(f.Name(), args...)
 	if err != nil {
 		return nil, err
 	}

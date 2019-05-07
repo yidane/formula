@@ -2,6 +2,7 @@ package opt
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"strconv"
 )
@@ -157,4 +158,32 @@ func (arg *Argument) IsInteger() bool {
 		arg.Type == reflect.Uint16 ||
 		arg.Type == reflect.Uint32 ||
 		arg.Type == reflect.Uint64
+}
+
+func (arg *Argument) IsNan() bool {
+	v, err := arg.Float64()
+	if err != nil {
+		return false
+	}
+
+	return math.IsNaN(v)
+}
+
+func (arg *Argument) Equal(other *Argument) bool {
+	if other == nil {
+		return false
+	}
+
+	if arg.IsNumber() && other.IsNumber() {
+		v0, _ := arg.Float64()
+		v1, _ := other.Float64()
+
+		return v0 == v1
+	}
+
+	if arg.Type == reflect.String && other.Type == reflect.String {
+		return arg.String() == other.String()
+	}
+
+	return false
 }

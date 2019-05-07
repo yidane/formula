@@ -1,9 +1,13 @@
 package formula
 
 import (
-	"github.com/yidane/formula/opt"
+	"fmt"
+	"go/importer"
 	"math"
 	"testing"
+
+	"github.com/yidane/formula/internal/fs"
+	"github.com/yidane/formula/opt"
 )
 
 func TestNewExpression(t *testing.T) {
@@ -235,24 +239,66 @@ func BenchmarkSin(b *testing.B) {
 
 func TestImplements(t *testing.T) {
 	//通过断言判断类型是否实现接口或组合了其他结构
-	//var i interface{} = opt.Function{}
-	//f, ok := i.(opt.Function)
-	//
-	//fmt.Println(ok)
-	//fmt.Println(f)
-	//
-	//var ii interface{} = fs.AddFunction{}
-	//f, ok = ii.(opt.Function)
-	//fmt.Println(ok)
-	//fmt.Println(f.Evaluate())
+	var ii interface{} = fs.NewPlusFunction()
+	f, ok := ii.(opt.Function)
+	fmt.Println(ok)
+	fmt.Println(f.Evaluate(nil))
 
-	//d := importer.For("source", nil)
-	//pkg, err := d.Import("github.com/yidane/formula/internal/fs")
-	//if err != nil {
-	//	t.Fatal(err)
-	//}
-	//
-	//for _, declName := range pkg.Scope().Names() {
-	//	t := pkg.Scope().Lookup(declName).Type()
-	//}
+	d := importer.For("source", nil)
+	pkg, err := d.Import("github.com/yidane/formula/internal/fs")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, declName := range pkg.Scope().Names() {
+		obj := pkg.Scope().Lookup(declName)
+		fmt.Printf("%s	%s\n", obj.Name(), obj.Type())
+	}
+}
+
+func TestForREADME(t *testing.T) {
+	testCases := []string{
+		"abs(-1)",
+		"acos(sqrt(3)/2)",
+		"asin(1/2)",
+		"atan(1)",
+		"ceil(3.4)",
+		"concat(1,23,hello)",
+		"cos(π/3)",
+		"3/4",
+		"exp(3.3)",
+		"floor(2.2)",
+		"3 > 2",
+		"iif(3 > 2,π,10)",
+		"in(3,3,4,5)",
+		"3 < 2",
+		"log2(16)",
+		"log10(100000)",
+		"log(100,10)",
+		"ln(2.718281828)",
+		"max(-1,2,3.1)",
+		"min(-1,2,3.1)",
+		"mod(3)",
+		"3*3.4",
+		"5+10",
+		"pow(10,2)",
+		"round(100.11)",
+		"sign(100)",
+		"sin(π/6)",
+		"3-6",
+		"tan(π/4)",
+		"truncate(12.3)",
+	}
+
+	for i := 0; i < len(testCases); i++ {
+		expression := NewExpression(testCases[i])
+		result, err := expression.Evaluate()
+		if err != nil {
+			t.Log(err)
+		}
+
+		if result != nil {
+			t.Log(testCases[i], "=", result)
+		}
+	}
 }

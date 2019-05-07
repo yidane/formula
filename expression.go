@@ -4,21 +4,25 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/yidane/formula/internal/cache"
 	"github.com/yidane/formula/internal/exp"
+	//register system functions
 	_ "github.com/yidane/formula/internal/fs"
 	"github.com/yidane/formula/internal/parser"
 	"github.com/yidane/formula/opt"
-	"strings"
 )
 
+//Expression for build user's input
 type Expression struct {
 	context            *opt.FormulaContext
 	originalExpression string
 	parsedExpression   *opt.LogicalExpression
 }
 
+//NewExpression create new Expression
 func NewExpression(expression string, options ...opt.Option) *Expression {
 	return &Expression{
 		originalExpression: strings.TrimSpace(expression),
@@ -57,10 +61,12 @@ func (expression *Expression) compile() error {
 	return nil
 }
 
+//OriginalString return user's input text
 func (expression *Expression) OriginalString() string {
 	return expression.originalExpression
 }
 
+//AddParameter add user's parameter which is required in the expression
 func (expression *Expression) AddParameter(name string, value interface{}) error {
 	name = strings.TrimSpace(name)
 	if name == "" {
@@ -75,10 +81,12 @@ func (expression *Expression) AddParameter(name string, value interface{}) error
 	return nil
 }
 
+//ResetParameters clear all parameter
 func (expression *Expression) ResetParameters() {
 	expression.context.Parameters = make(map[string]interface{})
 }
 
+//Evaluate return result of expression
 func (expression *Expression) Evaluate() (*opt.Argument, error) {
 	err := expression.compile()
 	if err != nil {

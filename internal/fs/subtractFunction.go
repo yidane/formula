@@ -12,8 +12,8 @@ func (*SubtractFunction) Name() string {
 	return "-"
 }
 
-func (*SubtractFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	err := opt.MatchTwoArgument("+", args...)
+func (f *SubtractFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	err := opt.MatchTwoArgument(f.Name(), args...)
 	if err != nil {
 		return nil, err
 	}

@@ -18,8 +18,8 @@ func (f *SignFunction) Evaluate(context *opt.FormulaContext, args ...*opt.Logica
 	if err != nil {
 		return nil, err
 	}
-
-	return opt.NewArgumentWithType(math.Signbit(v), reflect.Float64), nil
+	
+	return opt.NewArgumentWithType(math.Signbit(v), reflect.Bool), nil
 }
 
 func NewSignFunction() *SignFunction {

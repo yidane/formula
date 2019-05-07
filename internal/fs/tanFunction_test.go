@@ -21,7 +21,7 @@ func TestTanFunction_Evaluate(t *testing.T) {
 			f := NewTanFunction()
 
 			for i := 0; i < len(tt.args); i++ {
-				var logicalExpression = *exp.NewFloatExpression(tt.args[0])
+				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
 
 				result, err := f.Evaluate(nil, []*opt.LogicalExpression{&logicalExpression}...)
 				if err != nil {
@@ -33,7 +33,7 @@ func TestTanFunction_Evaluate(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				if v1, _ := strconv.ParseFloat(tt.args[0], 10); math.Tan(v1) != v {
+				if v1, _ := strconv.ParseFloat(tt.args[i], 64); math.Tan(v1) != v {
 					t.Fatal()
 				}
 			}

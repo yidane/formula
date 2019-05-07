@@ -2,7 +2,6 @@ package exp
 
 import (
 	"github.com/yidane/formula/opt"
-	"log"
 	"math"
 	"reflect"
 	"strconv"
@@ -34,9 +33,9 @@ type IntegerValueExpression struct {
 }
 
 func NewIntegerValueExpression(value string) *opt.LogicalExpression {
-	i, err := strconv.ParseInt(value, 10, 10)
+	i, err := strconv.ParseInt(value, 10, 64)
 	if err != nil {
-		log.Println(err)
+		panic(err)
 	}
 
 	var result opt.LogicalExpression = &IntegerValueExpression{
@@ -57,7 +56,7 @@ type FloatExpression struct {
 func NewFloatExpression(value string) *opt.LogicalExpression {
 	v, err := strconv.ParseFloat(value, 10)
 	if err != nil {
-		log.Println(err)
+		panic(err)
 	}
 
 	var result opt.LogicalExpression = &FloatExpression{

@@ -15,12 +15,12 @@ func TestCosFunction_Evaluate(t *testing.T) {
 	}{
 		{[]string{"1", "2", "3", "30", "0.5"}},
 	}
+
+	f := NewCosFunction()
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
-			f := NewCosFunction()
-
 			for i := 0; i < len(tt.args); i++ {
-				var logicalExpression = *exp.NewFloatExpression(tt.args[0])
+				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
 
 				result, err := f.Evaluate(nil, []*opt.LogicalExpression{&logicalExpression}...)
 				if err != nil {
@@ -32,7 +32,7 @@ func TestCosFunction_Evaluate(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				if v1, _ := strconv.ParseFloat(tt.args[0], 10); math.Cos(v1) != v {
+				if v1, _ := strconv.ParseFloat(tt.args[i], 64); math.Cos(v1) != v {
 					t.Fatal()
 				}
 			}

@@ -12,8 +12,8 @@ func (*MultiplyFunction) Name() string {
 	return "*"
 }
 
-func (*MultiplyFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	err := opt.MatchTwoArgument("+", args...)
+func (f *MultiplyFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	err := opt.MatchTwoArgument(f.Name(), args...)
 	if err != nil {
 		return nil, err
 	}

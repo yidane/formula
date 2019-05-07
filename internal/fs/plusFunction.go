@@ -12,8 +12,8 @@ func (*PlusFunction) Name() string {
 	return "+"
 }
 
-func (*PlusFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	err := opt.MatchTwoArgument("+", args...)
+func (f *PlusFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
+	err := opt.MatchTwoArgument(f.Name(), args...)
 	if err != nil {
 		return nil, err
 	}

@@ -1,36 +1,51 @@
 package fs
 
 import (
-	"reflect"
+	"fmt"
+	"github.com/yidane/formula/internal/exp"
 	"testing"
 
 	"github.com/yidane/formula/opt"
 )
 
 func TestPlusFunction_Evaluate(t *testing.T) {
-	type args struct {
-		context *opt.FormulaContext
-		args    []*opt.LogicalExpression
-	}
 	tests := []struct {
-		name    string
-		p       *PlusFunction
-		args    args
-		want    *opt.Argument
+		args    []string
+		want    float64
 		wantErr bool
 	}{
-	// TODO: Add test cases.
+		{[]string{"1", "2"}, 3, false},
+		{[]string{"1", "2", "3"}, 3, true},
 	}
+
+	p := NewPlusFunction()
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			p := &PlusFunction{}
-			got, err := p.Evaluate(tt.args.context, tt.args.args...)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("PlusFunction.Evaluate() error = %v, wantErr %v", err, tt.wantErr)
-				return
+		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
+			var args []*opt.LogicalExpression
+			for i := 0; i < len(tt.args); i++ {
+				args = append(args, exp.NewFloatExpression(tt.args[i]))
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("PlusFunction.Evaluate() = %v, want %v", got, tt.want)
+
+			if tt.wantErr && len(tt.args) < 2 {
+				args = append(args, exp.NewStringValueExpression("a"))
+			}
+
+			got, err := p.Evaluate(nil, args...)
+			if err != nil {
+				if tt.wantErr {
+					t.Log(err)
+					return
+				}
+				t.Fatal(err)
+			}
+
+			v, err := got.Float64()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if v != tt.want {
+				t.Fatalf("%v!+%v", tt.want, v)
 			}
 		})
 	}

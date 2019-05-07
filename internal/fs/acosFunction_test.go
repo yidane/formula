@@ -2,10 +2,11 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/internal/exp"
 	"math"
 	"strconv"
 	"testing"
+
+	"github.com/yidane/formula/internal/exp"
 
 	"github.com/yidane/formula/opt"
 )
@@ -16,12 +17,11 @@ func TestAcosFunction_Evaluate(t *testing.T) {
 	}{
 		{[]string{"1", "2", "3", "30", "0.5"}},
 	}
+	f := NewAcosFunction()
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
-			f := NewAcosFunction()
-
 			for i := 0; i < len(tt.args); i++ {
-				var logicalExpression = *exp.NewFloatExpression(tt.args[0])
+				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
 
 				result, err := f.Evaluate(nil, []*opt.LogicalExpression{&logicalExpression}...)
 				if err != nil {
@@ -33,7 +33,14 @@ func TestAcosFunction_Evaluate(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				if v1, _ := strconv.ParseFloat(tt.args[0], 10); math.Acos(v1) != v {
+				v1, _ := strconv.ParseFloat(tt.args[i], 64)
+				r := math.Acos(v1)
+
+				if math.IsNaN(v) && math.IsNaN(r) {
+					continue
+				}
+
+				if r != v {
 					t.Fatal()
 				}
 			}
