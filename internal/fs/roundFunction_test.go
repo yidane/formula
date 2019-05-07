@@ -1,36 +1,41 @@
 package fs
 
 import (
-	"reflect"
+	"fmt"
+	"github.com/yidane/formula/internal/exp"
+	"math"
+	"strconv"
 	"testing"
 
 	"github.com/yidane/formula/opt"
 )
 
 func TestRoundFunction_Evaluate(t *testing.T) {
-	type args struct {
-		context *opt.FormulaContext
-		args    []*opt.LogicalExpression
-	}
 	tests := []struct {
-		name    string
-		r       *RoundFunction
-		args    args
-		want    *opt.Argument
-		wantErr bool
+		args []string
 	}{
-		// TODO: Add test cases.
+		{[]string{"1", "2", "3", "30", "0.5"}},
 	}
+
+	f := NewRoundFunction()
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			r := &RoundFunction{}
-			got, err := r.Evaluate(tt.args.context, tt.args.args...)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("RoundFunction.Evaluate() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("RoundFunction.Evaluate() = %v, want %v", got, tt.want)
+		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
+			for i := 0; i < len(tt.args); i++ {
+				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
+
+				result, err := f.Evaluate(nil, []*opt.LogicalExpression{&logicalExpression}...)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				v, err := result.Float64()
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				if v1, _ := strconv.ParseFloat(tt.args[i], 64); math.Round(v1) != v {
+					t.Fatal()
+				}
 			}
 		})
 	}

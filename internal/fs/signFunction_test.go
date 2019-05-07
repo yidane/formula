@@ -1,36 +1,41 @@
 package fs
 
 import (
+	"fmt"
+	"github.com/yidane/formula/internal/exp"
+	"math"
 	"reflect"
+	"strconv"
 	"testing"
 
 	"github.com/yidane/formula/opt"
 )
 
 func TestSignFunction_Evaluate(t *testing.T) {
-	type args struct {
-		context *opt.FormulaContext
-		args    []*opt.LogicalExpression
-	}
 	tests := []struct {
-		name    string
-		s       *SignFunction
-		args    args
-		want    *opt.Argument
-		wantErr bool
+		args []string
 	}{
-		// TODO: Add test cases.
+		{[]string{"1", "2", "3", "30", "0.5"}},
 	}
+
+	f := NewSignFunction()
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &SignFunction{}
-			got, err := s.Evaluate(tt.args.context, tt.args.args...)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("SignFunction.Evaluate() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("SignFunction.Evaluate() = %v, want %v", got, tt.want)
+		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
+			for i := 0; i < len(tt.args); i++ {
+				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
+
+				result, err := f.Evaluate(nil, []*opt.LogicalExpression{&logicalExpression}...)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				if result.Type != reflect.Bool {
+					t.Fatal("error type")
+				}
+
+				if v1, _ := strconv.ParseFloat(tt.args[i], 64); math.Signbit(v1) != result.Value.(bool) {
+					t.Fatal()
+				}
 			}
 		})
 	}

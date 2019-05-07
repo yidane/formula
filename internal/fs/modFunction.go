@@ -14,14 +14,33 @@ func (*ModFunction) Name() string {
 }
 
 func (f *ModFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
-	v, err := ParseFloat(f.Name(), context, args...)
+	err := opt.MatchTwoArgument(f.Name(), args...)
 	if err != nil {
 		return nil, err
 	}
 
-	return opt.NewArgumentWithType(math.Mod(v, 1), reflect.Float64), nil
+	arg0, err := (*args[0]).Evaluate(context)
+	if err != nil {
+		return nil, err
+	}
+
+	arg1, err := (*args[1]).Evaluate(context)
+	if err != nil {
+		return nil, err
+	}
+
+	v0, err := arg0.Float64()
+	if err != nil {
+		return nil, err
+	}
+	v1, err := arg1.Float64()
+	if err != nil {
+		return nil, err
+	}
+
+	return opt.NewArgumentWithType(math.Mod(v0, v1), reflect.Float64), nil
 }
 
-func NewModuloFunction() *ModFunction {
+func NewModFunction() *ModFunction {
 	return &ModFunction{}
 }

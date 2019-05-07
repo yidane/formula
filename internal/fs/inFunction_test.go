@@ -1,6 +1,8 @@
 package fs
 
 import (
+	"fmt"
+	"github.com/yidane/formula/internal/exp"
 	"reflect"
 	"testing"
 
@@ -8,29 +10,31 @@ import (
 )
 
 func TestInFunction_Evaluate(t *testing.T) {
-	type args struct {
-		context *opt.FormulaContext
-		args    []*opt.LogicalExpression
-	}
 	tests := []struct {
-		name    string
-		i       *InFunction
-		args    args
-		want    *opt.Argument
-		wantErr bool
+		args []*opt.LogicalExpression
+		want bool
 	}{
-		// TODO: Add test cases.
+		{args: []*opt.LogicalExpression{
+			exp.NewFloatExpression("1.1"),
+			exp.NewFloatExpression("1.1"),
+			exp.NewStringValueExpression("1"),
+		}, want: true},
 	}
+	i := NewInFunction()
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			i := &InFunction{}
-			got, err := i.Evaluate(tt.args.context, tt.args.args...)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("InFunction.Evaluate() error = %v, wantErr %v", err, tt.wantErr)
-				return
+		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
+
+			got, err := i.Evaluate(nil, tt.args...)
+			if err != nil {
+				t.Fatal(err)
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("InFunction.Evaluate() = %v, want %v", got, tt.want)
+
+			if got.Type != reflect.Bool {
+				t.Fatal("error type")
+			}
+
+			if got.Value.(bool) != tt.want {
+				t.Fatal(got.Value)
 			}
 		})
 	}

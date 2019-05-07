@@ -16,10 +16,10 @@ func TestTanFunction_Evaluate(t *testing.T) {
 	}{
 		{[]string{"1", "2", "3", "30", "0.5"}},
 	}
+
+	f := NewTanFunction()
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt.args), func(t *testing.T) {
-			f := NewTanFunction()
-
 			for i := 0; i < len(tt.args); i++ {
 				var logicalExpression = *exp.NewFloatExpression(tt.args[i])
 

@@ -28,7 +28,7 @@ func init() {
 		NewLnFunction(),
 		NewMaxFunction(),
 		NewMinFunction(),
-		NewModuloFunction(),
+		NewModFunction(),
 		NewMultiplyFunction(),
 		NewPlusFunction(),
 		NewPowerFunction(),
