@@ -37,6 +37,33 @@ func NewArgumentWithType(v interface{}, t reflect.Kind) *Argument {
 	}
 }
 
+func (arg *Argument) Int() (int, error) {
+	switch arg.Type {
+	case reflect.Int:
+		return int(arg.Value.(int)), nil
+	case reflect.Int8:
+		return int(arg.Value.(int8)), nil
+	case reflect.Int16:
+		return int(arg.Value.(int16)), nil
+	case reflect.Int32:
+		return int(arg.Value.(int32)), nil
+	case reflect.Int64:
+		return int(arg.Value.(int64)), nil
+	case reflect.Uint:
+		return int(arg.Value.(uint)), nil
+	case reflect.Uint8:
+		return int(arg.Value.(uint8)), nil
+	case reflect.Uint16:
+		return int(arg.Value.(uint16)), nil
+	case reflect.Uint32:
+		return int(arg.Value.(uint32)), nil
+	case reflect.Uint64:
+		return int(arg.Value.(uint64)), nil
+	default:
+		return 0, fmt.Errorf("type %s can not convert to int", arg.Type)
+	}
+}
+
 func (arg *Argument) Int64() (int64, error) {
 	switch arg.Type {
 	case reflect.Int:
