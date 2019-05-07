@@ -10,7 +10,7 @@ type ModuloFunction struct {
 }
 
 func (*ModuloFunction) Name() string {
-	return "modulo"
+	return "mod"
 }
 
 func (f *ModuloFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
