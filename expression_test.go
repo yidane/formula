@@ -278,7 +278,7 @@ func TestForREADME(t *testing.T) {
 		"ln(2.718281828)",
 		"max(-1,2,3.1)",
 		"min(-1,2,3.1)",
-		"mod(3)",
+		"mod(5,2)",
 		"3*3.4",
 		"5+10",
 		"pow(10,2)",
@@ -288,6 +288,8 @@ func TestForREADME(t *testing.T) {
 		"3-6",
 		"tan(π/4)",
 		"truncate(12.3)",
+		"2>>1",
+		"1<<1",
 	}
 
 	for i := 0; i < len(testCases); i++ {
@@ -298,7 +300,7 @@ func TestForREADME(t *testing.T) {
 		}
 
 		if result != nil {
-			t.Log(testCases[i], "=", result)
+			t.Log(testCases[i], "|", result)
 		}
 	}
 }
