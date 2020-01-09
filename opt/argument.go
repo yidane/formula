@@ -19,6 +19,14 @@ func NewArgument(v interface{}) *Argument {
 			Type:  reflect.String,
 		}
 	}
+	// 支持闭包
+	if reflect.TypeOf(v).Kind() == reflect.Func {
+		fv := v.(func() interface{})()
+		return &Argument{
+			Value: fv,
+			Type:  reflect.TypeOf(fv).Kind(),
+		}
+	}
 
 	return &Argument{
 		Value: v,
