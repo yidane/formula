@@ -37,7 +37,7 @@ func NewVarIdentifierExpression(name string) *opt.LogicalExpression {
 
 func (expression *VarIdentifierExpression) Evaluate(context *opt.FormulaContext) (*opt.Argument, error) {
 	if p, ok := context.Parameters[expression.Name]; ok {
-		return opt.NewArgument(p), nil
+		return opt.NewArgument(p)
 	}
 
 	return nil, fmt.Errorf("variable %s can not be resolved", expression.Name)
