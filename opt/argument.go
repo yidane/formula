@@ -7,23 +7,36 @@ import (
 	"strconv"
 )
 
+type ArgumentFunc func() (interface{}, error)
+
 type Argument struct {
 	Value interface{}
 	Type  reflect.Kind
 }
 
-func NewArgument(v interface{}) *Argument {
+func NewArgument(v interface{}) (*Argument, error) {
 	if v == nil {
 		return &Argument{
 			Value: "",
 			Type:  reflect.String,
+		}, nil
+	}
+
+	if reflect.TypeOf(v).Kind() == reflect.Func {
+		fv, err := v.(ArgumentFunc)()
+		if err != nil {
+			return nil, err
 		}
+		return &Argument{
+			Value: fv,
+			Type:  reflect.TypeOf(fv).Kind(),
+		}, nil
 	}
 
 	return &Argument{
 		Value: v,
 		Type:  reflect.TypeOf(v).Kind(),
-	}
+	}, nil
 }
 
 func NewArgumentWithType(v interface{}, t reflect.Kind) *Argument {
