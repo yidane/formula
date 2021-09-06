@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"reflect"
 	"strings"
+
+	"github.com/yidane/formula/opt"
 )
 
 type ConcatFunction struct {
@@ -11,6 +12,10 @@ type ConcatFunction struct {
 
 func (*ConcatFunction) Name() string {
 	return "concat"
+}
+
+func (*ConcatFunction) AliasName() []string {
+	return nil
 }
 
 func (*ConcatFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

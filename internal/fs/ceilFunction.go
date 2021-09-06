@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type CeilFunction struct {
@@ -11,6 +12,10 @@ type CeilFunction struct {
 
 func (*CeilFunction) Name() string {
 	return "ceil"
+}
+
+func (*CeilFunction) AliasName() []string {
+	return nil
 }
 
 func (f *CeilFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

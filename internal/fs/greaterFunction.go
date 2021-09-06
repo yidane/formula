@@ -2,8 +2,9 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/opt"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type GreaterFunction struct {
@@ -11,6 +12,10 @@ type GreaterFunction struct {
 
 func (*GreaterFunction) Name() string {
 	return ">"
+}
+
+func (*GreaterFunction) AliasName() []string {
+	return nil
 }
 
 func (f *GreaterFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

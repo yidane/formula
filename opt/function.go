@@ -6,11 +6,12 @@ import (
 
 type Function interface {
 	Name() string
+	AliasName() []string
 	Evaluate(context *FormulaContext, args ...*LogicalExpression) (*Argument, error)
 }
 
 func MatchArgument(name string, args ...*LogicalExpression) error {
-	if args == nil || len(args) == 0 {
+	if len(args) == 0 {
 		return fmt.Errorf(name)
 	}
 

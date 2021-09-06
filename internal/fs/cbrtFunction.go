@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type CbrtFunction struct {
@@ -11,6 +12,10 @@ type CbrtFunction struct {
 
 func (*CbrtFunction) Name() string {
 	return "cbrt"
+}
+
+func (*CbrtFunction) AliasName() []string {
+	return nil
 }
 
 func (f *CbrtFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

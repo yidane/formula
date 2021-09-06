@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type FloorFunction struct {
@@ -11,6 +12,10 @@ type FloorFunction struct {
 
 func (*FloorFunction) Name() string {
 	return "floor"
+}
+
+func (*FloorFunction) AliasName() []string {
+	return nil
 }
 
 func (f *FloorFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type Log2Function struct {
@@ -11,6 +12,10 @@ type Log2Function struct {
 
 func (*Log2Function) Name() string {
 	return "log2"
+}
+
+func (*Log2Function) AliasName() []string {
+	return nil
 }
 
 func (f *Log2Function) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

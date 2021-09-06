@@ -2,8 +2,9 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/opt"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type LessFunction struct {
@@ -11,6 +12,10 @@ type LessFunction struct {
 
 func (*LessFunction) Name() string {
 	return "<"
+}
+
+func (*LessFunction) AliasName() []string {
+	return nil
 }
 
 func (f *LessFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

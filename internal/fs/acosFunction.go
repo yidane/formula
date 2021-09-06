@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type AcosFunction struct {
@@ -11,6 +12,10 @@ type AcosFunction struct {
 
 func (*AcosFunction) Name() string {
 	return "acos"
+}
+
+func (*AcosFunction) AliasName() []string {
+	return nil
 }
 
 func (f *AcosFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type ExpFunction struct {
@@ -11,6 +12,10 @@ type ExpFunction struct {
 
 func (*ExpFunction) Name() string {
 	return "exp"
+}
+
+func (*ExpFunction) AliasName() []string {
+	return nil
 }
 
 func (f *ExpFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

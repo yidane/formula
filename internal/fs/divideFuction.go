@@ -2,8 +2,9 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/opt"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type DivideFunction struct {
@@ -11,6 +12,10 @@ type DivideFunction struct {
 
 func (*DivideFunction) Name() string {
 	return "/"
+}
+
+func (*DivideFunction) AliasName() []string {
+	return nil
 }
 
 func (f *DivideFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

@@ -2,8 +2,9 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/opt"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type InFunction struct {
@@ -11,6 +12,10 @@ type InFunction struct {
 
 func (*InFunction) Name() string {
 	return "in"
+}
+
+func (*InFunction) AliasName() []string {
+	return nil
 }
 
 func (f *InFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

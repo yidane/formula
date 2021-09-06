@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type CosFunction struct {
@@ -11,6 +12,10 @@ type CosFunction struct {
 
 func (*CosFunction) Name() string {
 	return "cos"
+}
+
+func (*CosFunction) AliasName() []string {
+	return nil
 }
 
 func (f *CosFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

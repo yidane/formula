@@ -2,8 +2,9 @@ package fs
 
 import (
 	"fmt"
-	"github.com/yidane/formula/opt"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type IIFFunction struct {
@@ -11,6 +12,10 @@ type IIFFunction struct {
 
 func (*IIFFunction) Name() string {
 	return "iif"
+}
+
+func (*IIFFunction) AliasName() []string {
+	return nil
 }
 
 func (f *IIFFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

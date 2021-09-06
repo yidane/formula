@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type AtanFunction struct {
@@ -11,6 +12,10 @@ type AtanFunction struct {
 
 func (*AtanFunction) Name() string {
 	return "atan"
+}
+
+func (*AtanFunction) AliasName() []string {
+	return nil
 }
 
 func (f *AtanFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {

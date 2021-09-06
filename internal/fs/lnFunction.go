@@ -1,9 +1,10 @@
 package fs
 
 import (
-	"github.com/yidane/formula/opt"
 	"math"
 	"reflect"
+
+	"github.com/yidane/formula/opt"
 )
 
 type LnFunction struct {
@@ -11,6 +12,10 @@ type LnFunction struct {
 
 func (*LnFunction) Name() string {
 	return "ln"
+}
+
+func (*LnFunction) AliasName() []string {
+	return nil
 }
 
 func (f *LnFunction) Evaluate(context *opt.FormulaContext, args ...*opt.LogicalExpression) (*opt.Argument, error) {
