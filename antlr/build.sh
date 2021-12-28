@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-java -jar antlr-4.7-complete.jar -Dlanguage=Go -o ../internal/parser Formula.g4
+rm ../internal/parser/*
+java -jar antlr-4.9-complete.jar -Dlanguage=Go -o ../internal/parser Formula.g4

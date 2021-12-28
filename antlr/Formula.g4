@@ -2,7 +2,7 @@ grammar Formula;
 
 options{language=go;}
 
-@header {
+@parser::header {
 import (
     "github.com/yidane/formula/opt"
     "github.com/yidane/formula/internal/exp"
