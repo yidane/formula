@@ -1,2 +1,3 @@
-# github.com/antlr/antlr4 v0.0.0-20190325153624-837aa60e2c47
+# github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20211227225402-a16b5ef145f1
+## explicit; go 1.16
 github.com/antlr/antlr4/runtime/Go/antlr

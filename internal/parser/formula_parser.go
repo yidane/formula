@@ -1,4 +1,4 @@
-// Generated from Formula.g4 by ANTLR 4.7.
+// Code generated from Formula.g4 by ANTLR 4.9. DO NOT EDIT.
 
 package parser // Formula
 
@@ -153,9 +153,6 @@ var parserATN = []uint16{
 	35, 3, 2, 2, 2, 23, 50, 63, 77, 91, 105, 119, 136, 138, 165, 167, 184,
 	186, 203, 205, 227, 229, 247, 267, 276, 293, 299,
 }
-var deserializer = antlr.NewATNDeserializer(nil)
-var deserializedATN = deserializer.DeserializeFromUInt16(parserATN)
-
 var literalNames = []string{
 	"", "'?'", "':'", "'||'", "'or'", "'&&'", "'and'", "'|'", "'^'", "'&'",
 	"'=='", "'='", "'!='", "'<>'", "'<'", "'<='", "'>'", "'>='", "'<<'", "'>>'",
@@ -173,21 +170,25 @@ var ruleNames = []string{
 	"eqExpr", "relExpr", "shiftExpr", "addExpr", "multExpr", "unaryExpr", "primaryExpr",
 	"value", "id", "π",
 }
-var decisionToDFA = make([]*antlr.DFA, len(deserializedATN.DecisionToState))
-
-func init() {
-	for index, ds := range deserializedATN.DecisionToState {
-		decisionToDFA[index] = antlr.NewDFA(ds, index)
-	}
-}
 
 type FormulaParser struct {
 	*antlr.BaseParser
 }
 
+// NewFormulaParser produces a new parser instance for the optional input antlr.TokenStream.
+//
+// The *FormulaParser instance produced may be reused by calling the SetInputStream method.
+// The initial parser configuration is expensive to construct, and the object is not thread-safe;
+// however, if used within a Golang sync.Pool, the construction cost amortizes well and the
+// objects can be used in a thread-safe manner.
 func NewFormulaParser(input antlr.TokenStream) *FormulaParser {
 	this := new(FormulaParser)
-
+	deserializer := antlr.NewATNDeserializer(nil)
+	deserializedATN := deserializer.DeserializeFromUInt16(parserATN)
+	decisionToDFA := make([]*antlr.DFA, len(deserializedATN.DecisionToState))
+	for index, ds := range deserializedATN.DecisionToState {
+		decisionToDFA[index] = antlr.NewDFA(ds, index)
+	}
 	this.BaseParser = antlr.NewBaseParser(input)
 
 	this.Interpreter = antlr.NewParserATNSimulator(this, deserializedATN, decisionToDFA, antlr.NewPredictionContextCache())
@@ -787,14 +788,16 @@ func (p *FormulaParser) orExpr(_p int) (localctx IOrExprContext) {
 			if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 			}
-			p.SetState(55)
-			_la = p.GetTokenStream().LA(1)
+			{
+				p.SetState(55)
+				_la = p.GetTokenStream().LA(1)
 
-			if !(_la == FormulaParserT__2 || _la == FormulaParserT__3) {
-				p.GetErrorHandler().RecoverInline(p)
-			} else {
-				p.GetErrorHandler().ReportMatch(p)
-				p.Consume()
+				if !(_la == FormulaParserT__2 || _la == FormulaParserT__3) {
+					p.GetErrorHandler().RecoverInline(p)
+				} else {
+					p.GetErrorHandler().ReportMatch(p)
+					p.Consume()
+				}
 			}
 			{
 				p.SetState(56)
@@ -986,14 +989,16 @@ func (p *FormulaParser) andExpr(_p int) (localctx IAndExprContext) {
 			if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 			}
-			p.SetState(69)
-			_la = p.GetTokenStream().LA(1)
+			{
+				p.SetState(69)
+				_la = p.GetTokenStream().LA(1)
 
-			if !(_la == FormulaParserT__4 || _la == FormulaParserT__5) {
-				p.GetErrorHandler().RecoverInline(p)
-			} else {
-				p.GetErrorHandler().ReportMatch(p)
-				p.Consume()
+				if !(_la == FormulaParserT__4 || _la == FormulaParserT__5) {
+					p.GetErrorHandler().RecoverInline(p)
+				} else {
+					p.GetErrorHandler().ReportMatch(p)
+					p.Consume()
+				}
 			}
 			{
 				p.SetState(70)
@@ -1768,14 +1773,16 @@ func (p *FormulaParser) eqExpr(_p int) (localctx IEqExprContext) {
 				if !(p.Precpred(p.GetParserRuleContext(), 3)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 3)", ""))
 				}
-				p.SetState(125)
-				_la = p.GetTokenStream().LA(1)
+				{
+					p.SetState(125)
+					_la = p.GetTokenStream().LA(1)
 
-				if !(_la == FormulaParserT__9 || _la == FormulaParserT__10) {
-					p.GetErrorHandler().RecoverInline(p)
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
+					if !(_la == FormulaParserT__9 || _la == FormulaParserT__10) {
+						p.GetErrorHandler().RecoverInline(p)
+					} else {
+						p.GetErrorHandler().ReportMatch(p)
+						p.Consume()
+					}
 				}
 				{
 					p.SetState(126)
@@ -1795,14 +1802,16 @@ func (p *FormulaParser) eqExpr(_p int) (localctx IEqExprContext) {
 				if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 				}
-				p.SetState(130)
-				_la = p.GetTokenStream().LA(1)
+				{
+					p.SetState(130)
+					_la = p.GetTokenStream().LA(1)
 
-				if !(_la == FormulaParserT__11 || _la == FormulaParserT__12) {
-					p.GetErrorHandler().RecoverInline(p)
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
+					if !(_la == FormulaParserT__11 || _la == FormulaParserT__12) {
+						p.GetErrorHandler().RecoverInline(p)
+					} else {
+						p.GetErrorHandler().ReportMatch(p)
+						p.Consume()
+					}
 				}
 				{
 					p.SetState(131)
@@ -2891,14 +2900,16 @@ func (p *FormulaParser) UnaryExpr() (localctx IUnaryExprContext) {
 	switch p.GetTokenStream().LA(1) {
 	case FormulaParserT__24, FormulaParserT__25:
 		p.EnterOuterAlt(localctx, 1)
-		p.SetState(230)
-		_la = p.GetTokenStream().LA(1)
+		{
+			p.SetState(230)
+			_la = p.GetTokenStream().LA(1)
 
-		if !(_la == FormulaParserT__24 || _la == FormulaParserT__25) {
-			p.GetErrorHandler().RecoverInline(p)
-		} else {
-			p.GetErrorHandler().ReportMatch(p)
-			p.Consume()
+			if !(_la == FormulaParserT__24 || _la == FormulaParserT__25) {
+				p.GetErrorHandler().RecoverInline(p)
+			} else {
+				p.GetErrorHandler().ReportMatch(p)
+				p.Consume()
+			}
 		}
 		{
 			p.SetState(231)
